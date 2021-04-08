@@ -1,3 +1,14 @@
-body{
-    font-weight: 600;
+/*
+    Main Color Scheme:
+    White: #FFF
+    NHS Blue: #005EB8
+    NHS Dark Grey: #425563
+    NHS Mid Gray: #768692
+    NHS Warm Yellow: #FFB81C
+    Extra Colors available: https://digital.nhs.uk/about-nhs-digital/corporate-information-and-documents/nhs-digital-style-guidelines/how-we-look/colour-palette
+*/
+
+.navbar{
+    height: 15vh;
+    background: #005EB8;
 }
