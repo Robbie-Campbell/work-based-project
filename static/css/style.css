@@ -81,3 +81,14 @@ body{
 .alert-warning svg{
     margin-left: 10vw;
 }
+
+@media only screen and (max-width: 491px)
+{
+    .detail{
+        display: none;
+    }
+
+    .decoration{
+        max-width: 112.5px;
+    }
+}
