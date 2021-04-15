@@ -3,11 +3,15 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-    <!-- <main>
+    <main>
         <div class="content">
             <div class="container">
-                <h1>Hello world</h1>
+                {% if user.is_authenticated %}
+                    <h1>Logged in</h1>
+                {% else %}
+                    <h1>Not Logged in</h1>
+                {% endif %}
             </div>
         </div>
-    </main> -->
+    </main>
 {% endblock %}
