@@ -5,64 +5,58 @@
 <head>
     <meta charset="utf-8">
     <title>NHS - {% block title %}{% endblock %}</title>
-
-    <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/navbar-static/">
-
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
-
-    <style>
-        .bd-placeholder-img {
-            font-size: 1.125rem;
-            text-anchor: middle;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-        }
-
-        @media (min-width: 768px) {
-            .bd-placeholder-img-lg {
-                font-size: 3.5rem;
-            }
-        }
-    </style>
-    </head>
-
     <body>
-        <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
-            <a class="navbar-brand" href="#">Top navbar</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
-                aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarCollapse">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        <nav class="navbar mh-100">
+            <div class="decoration">
+                <img class="nav-logo" src="{% static 'images/nhs-logo.jpg' %}" alt="NHS logo">
+                <h6 class="detail text-center">University Hospitals Dorset<br>NHS Foundation Trust</h6>
+            </div>   
+            <div class="nav-items"> 
+                <ul class="nav">
+                    <li class="nav-item {% if request.path == '/' %}active{% endif %}">
+                        <a class="nav-link" href="/">Home</a>
                     </li>
+                    {% if request.user.therapist %}
+                    <li class="nav-item {% if request.path == '/insert/' %}active{% endif %}">
+                        <a class="nav-link" href="#">Access Database</a>
+                    </li>
+                    {% endif %}
+                    {% if request.user.administrator %}
+                    <li class="nav-item {% if request.path == '/view/' %}active{% endif %}">
+                        <a class="nav-link" href="#">View Data</a>
+                    </li>
+                    {% endif %}
+                    <li class="nav-item {% if request.path == '/help/' %}active{% endif %}">
+                        <a class="nav-link" href="#">Help</a>
+                    </li>
+                    {% if user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
+                        <a class="nav-link" href="logout/">Logout</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                    {% else %}
+                    <li class="nav-item {% if request.path == '/login/' %}active{% endif %}">
+                        <a class="nav-link" href="login/">Login</a>
                     </li>
+                    {% endif %}
                 </ul>
-                <form class="form-inline mt-2 mt-md-0">
-                    <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                </form>
             </div>
         </nav>
+        <div class="alert alert-warning p-3" role="alert">
+            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-flag-fill" viewBox="0 0 16 16">
+                <path d="M14.778.085A.5.5 0 0 1 15 .5V8a.5.5 0 0 1-.314.464L14.5 8l.186.464-.003.001-.006.003-.023.009a12.435 12.435 0 0 1-.397.15c-.264.095-.631.223-1.047.35-.816.252-1.879.523-2.71.523-.847 0-1.548-.28-2.158-.525l-.028-.01C7.68 8.71 7.14 8.5 6.5 8.5c-.7 0-1.638.23-2.437.477A19.626 19.626 0 0 0 3 9.342V15.5a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 1 0v.282c.226-.079.496-.17.79-.26C4.606.272 5.67 0 6.5 0c.84 0 1.524.277 2.121.519l.043.018C9.286.788 9.828 1 10.5 1c.7 0 1.638-.23 2.437-.477a19.587 19.587 0 0 0 1.349-.476l.019-.007.004-.002h.001"/>
+            </svg>
+            <div class="alert-information pl-3">
+                <h5>COVID-19 UPDATE</h5>
+                <a href="#">Get the latest information about this.</a>
+            </div>
+        </div>
         {% block content %}
         {% endblock %}
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
             integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
         </script>
-        <script>
-            window.jQuery || document.write('<script src="/docs/4.3/assets/js/vendor/jquery-slim.min.js"><\/script>')
-        </script>
     </body>
-
 </html>
