@@ -10,6 +10,9 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;400&display=swap');
 
+/*
+    Homepage and navbar styling
+*/
 body{
     font-family: 'Poppins', sans-serif;
     font-weight: 200;
@@ -91,4 +94,16 @@ body{
     .decoration{
         max-width: 112.5px;
     }
+}
+
+/*
+    Login page Styling
+*/
+
+.form-group{
+    margin-top: 100px;
+}
+
+.form-group *{
+    margin-bottom: 5px;
 }
