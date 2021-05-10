@@ -60,9 +60,9 @@ class Therapy(models.Model):
     therapist = models.ForeignKey(Therapist, on_delete=models.CASCADE)
     rehab = models.BooleanField(default=False)
     direct_input = models.ForeignKey(DirectInput, blank=True, null=True, on_delete=models.SET_NULL)
-    direct_time = models.DecimalField(max_digits=5, decimal_places=2, default=0.00, null=True, blank=True)
+    direct_time = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
     indirect_input = models.ForeignKey(IndirectInput, blank=True, null=True, on_delete=models.SET_NULL)
-    indirect_time = models.DecimalField(max_digits=5, decimal_places=2, default=0.00, null=True, blank=True)
+    indirect_time = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
 
     class Meta:
         verbose_name_plural = "Therapies"

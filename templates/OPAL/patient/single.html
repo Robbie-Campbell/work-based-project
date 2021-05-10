@@ -6,7 +6,10 @@
     <h1>{{ patient.first_name }}</h1>
     <p>Direct Average Time: {{ direct_average }}</p>
     <p>Indirect Average Time: {{ indirect_average }}</p>
-    <a class="btn btn-danger" href="{% url 'patient_delete' id=patient.id %}">Delete Patient</a>
+    <form action= "{% url 'patient_delete' id=patient.id %}" method="delete">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Delete Patient</button>
+    </form>
     {% for therapy in therapies %}
         <h4>Therapy ID: {{ therapy.id }}</h4>
         <p>Therapist: {{ therapy.therapist.firstname }} {{ therapy.therapist.surname }}</p>
@@ -14,11 +17,10 @@
         {% if therapy.direct_input %}
             <p>Direct Assessment Type: {{ therapy.direct_input }}</p>
             <p>Duration: {{ therapy.direct_time }}</p>
-        {% elif therapy.indirect_input %}
+        {% endif %}
+        {% if therapy.indirect_input %}
             <p>Indirect Assessment Type: {{ therapy.indirect_input }}</p>
             <p>Duration: {{ therapy.indirect_time }}</p>
-        {% else %}
-            <h5>No further information</h5>
         {% endif %}
         <a class="btn btn-info" href="{% url 'therapy_single' id=therapy.id %}">View this Therapy</a>
     {% endfor %}

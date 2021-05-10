@@ -6,6 +6,9 @@
     {% for therapist in therapist %}
         <h1>{{ therapist.firstname }}</h1>
         <a class="btn btn-info" href="{% url 'therapist_single' id=therapist.id %}">View More?</a>
-        <a class="btn btn-danger" href="{% url 'therapist_delete' id=therapist.id %}">Delete Therapist</a>
+        <form action="{% url 'therapist_delete' id=therapist.id %}" method="delete">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Delete Therapist</button>
+        </form>
     {% endfor %}
 {% endblock %}
