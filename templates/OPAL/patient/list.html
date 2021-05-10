@@ -5,6 +5,7 @@
 {% block content %}
     {% for patient in patients %}
         <h1>{{ patient.first_name }}</h1>
-        <a href="{% url 'patient_single' id=patient.id %}">View More?</a>
+        <a class="btn btn-info" href="{% url 'patient_single' id=patient.id %}">View More?</a>
+        <a class="btn btn-danger" href="{% url 'patient_delete' id=patient.id %}">Delete Patient</a>
     {% endfor %}
 {% endblock %}
