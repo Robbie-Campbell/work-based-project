@@ -3,6 +3,7 @@
 {% block title %}{{ therapy.id }}{% endblock %}
 
 {% block content %}
+    <h1>{{ therapy.id }}</h1>
     <h1>{{ therapy.patient.firstname }}</h1>
     <p>{{ therapy.therapist.firstname }}</p>
     <p>{{ therapy.rehab }}</p>
@@ -15,4 +16,7 @@
     {% else %}
         <h5>No further information</h5>
     {% endif %}
+    <a class="btn btn-info" href="{% url 'patient_single' id=therapy.patient.id %}">View Patient</a>
+    <a class="btn btn-success" href="{% url 'therapist_single' id=therapy.therapist.id %}">View Therapist</a>
+    <a class="btn btn-danger" href="{% url 'therapy_delete' id=therapy.id %}">Delete Therapy</a>
 {% endblock %}

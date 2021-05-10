@@ -4,6 +4,9 @@
 
 {% block content %}
     <h1>{{ patient.first_name }}</h1>
+    <p>Direct Average Time: {{ direct_average }}</p>
+    <p>Indirect Average Time: {{ indirect_average }}</p>
+    <a class="btn btn-danger" href="{% url 'patient_delete' id=patient.id %}">Delete Patient</a>
     {% for therapy in therapies %}
         <h4>Therapy ID: {{ therapy.id }}</h4>
         <p>Therapist: {{ therapy.therapist.firstname }} {{ therapy.therapist.surname }}</p>
@@ -17,5 +20,6 @@
         {% else %}
             <h5>No further information</h5>
         {% endif %}
+        <a class="btn btn-info" href="{% url 'therapy_single' id=therapy.id %}">View this Therapy</a>
     {% endfor %}
 {% endblock %}

@@ -5,6 +5,7 @@
 {% block content %}
     {% for therapy in therapies %}
         <h1>{{ therapy.id }}</h1>
-        <a href="{% url 'therapy_single' id=therapy.id %}">View More?</a>
+        <a class="btn btn-info" href="{% url 'therapy_single' id=therapy.id %}">View More?</a>
+        <a class="btn btn-danger" href="{% url 'therapy_delete' id=therapy.id %}">Delete Therapy</a>
     {% endfor %}
 {% endblock %}
