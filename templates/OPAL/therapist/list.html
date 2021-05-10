@@ -7,5 +7,6 @@
         <h1>{{ therapist.firstname }}</h1>
         <a class="btn btn-info" href="{% url 'therapist_single' id=therapist.id %}">View More?</a>
         <a class="btn btn-danger" href="{% url 'therapist_delete' id=therapist.id %}">Delete Therapist</a>
+        <a href="{% url 'therapist_single' id=therapist.id %}">View More??</a>
     {% endfor %}
 {% endblock %}
