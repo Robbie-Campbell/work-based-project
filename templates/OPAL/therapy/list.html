@@ -3,9 +3,22 @@
 {% block title %}Therapies{% endblock %}
 
 {% block content %}
+    <div class="input-group mb-3">
+        <form class="form-inline my-2 my-lg-0 flex" action="{% url 'therapy_search' %}" method="get">
+            {% csrf_token %}
+            <input name="q" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    </div>
     {% for therapy in therapies %}
         <h1>{{ therapy.id }}</h1>
-        <a class="btn btn-info" href="{% url 'therapy_single' id=therapy.id %}">View More?</a>
-        <a class="btn btn-danger" href="{% url 'therapy_delete' id=therapy.id %}">Delete Therapy</a>
+        <a class="btn btn-primary" href="{% url 'therapy_single' id=therapy.id %}">View More?</a>
+        {% if request.user.is_staff %}
+            <a class="btn btn-info" href="{% url 'therapy_edit' id=therapy.id %}">Edit Therapy</a>
+            <form action="{% url 'therapy_delete' id=therapy.id %}" method="DELETE">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Delete Therapy</button>
+            </form>
+        {% endif %}
     {% endfor %}
 {% endblock %}

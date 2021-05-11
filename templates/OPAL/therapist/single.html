@@ -1,12 +1,22 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ therapist.firstname }}{% endblock %}
+{% block title %}{{ therapist }}{% endblock %}
 
 {% block content %}
-    <h1>Therapist: {{ therapist.firstname }} {{ therapy.therapist.surname }}</h1>
-    <p>Direct Average Time: {{ direct_average }}</p>
-    <p>Indirect Average Time: {{ indirect_average }}</p>
-    <a class="btn btn-danger" href="{% url 'therapist_delete' id=therapist.id %}">Delete Therapist</a>
+    <h1>Therapist: {{ therapist }}</h1>
+    {% if direct_average != None %}
+        <p>Direct Average Time: {{ direct_average }} Minutes.</p>
+    {% endif %}
+    {% if indirect_average != None %}
+        <p>Indirect Average Time: {{ indirect_average }} Minutes.</p>
+    {% endif %}
+    {% if request.user.is_staff %}
+        <form action="{% url 'therapist_delete' id=therapist.id %}" method="DELETE">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Delete Therapist</button>
+        </form>
+        <a class="btn btn-info" href="{% url 'therapist_edit' id=therapist.id %}">Edit Therapist</a>
+    {% endif %}
     <h5>List of Therapies:</h5>
     {% for therapy in therapies %}
         <h4>Therapy ID: {{ therapy.id }}</h4>
@@ -14,11 +24,10 @@
         {% if therapy.direct_input %}
             <p>Direct Assessment Type: {{ therapy.direct_input }}</p>
             <p>Duration: {{ therapy.direct_time }}</p>
-        {% elif therapy.indirect_input %}
+        {% endif %}
+        {% if therapy.indirect_input %}
             <p>Indirect Assessment Type: {{ therapy.indirect_input }}</p>
             <p>Duration: {{ therapy.indirect_time }}</p>
-        {% else %}
-            <h5>No further information</h5>
         {% endif %}
         <a class="btn btn-info" href="{% url 'therapy_single' id=therapy.id %}">View this Therapy</a>
     {% endfor %}
