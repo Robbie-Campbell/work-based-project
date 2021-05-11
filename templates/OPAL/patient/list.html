@@ -3,12 +3,26 @@
 {% block title %}Patients{% endblock %}
 
 {% block content %}
-    {% for patient in patients %}
-        <h1>{{ patient.first_name }}</h1>
-        <a class="btn btn-info" href="{% url 'patient_single' id=patient.id %}">View More?</a>
-        <form action= "{% url 'patient_delete' id=patient.id %}" method="delete">
+    <div class="input-group mb-3">
+        <form class="form-inline my-2 my-lg-0 flex" action="{% url 'patient_search' %}" method="get">
             {% csrf_token %}
-            <button type="submit" class="btn btn-danger">Delete Patient</button>
+            <input name="q" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
-    {% endfor %}
+    </div>
+    {% if patients %}
+        {% for patient in patients %}
+            <h1>{{ patient }}</h1>
+            <a class="btn btn-primary" href="{% url 'patient_single' id=patient.id %}">View More?</a>
+            {% if request.user.is_staff %}
+                <a class="btn btn-info" href="{% url 'patient_edit' id=patient.id %}">Edit Patient</a>
+                <form action= "{% url 'patient_delete' id=patient.id %}" method="delete">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Delete Patient</button>
+                </form>
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        <h1>No results found</h1>
+    {% endif %}
 {% endblock %}

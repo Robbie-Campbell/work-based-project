@@ -19,7 +19,7 @@ class Therapist(models.Model):
         (PHYSIOTHERAPY, "Physio Therapist"),
     )
 
-    firstname = models.CharField(max_length=50)
+    first_name = models.CharField(max_length=50)
     surname = models.CharField(max_length=50)
     therapist_role = models.CharField(
         max_length=2,
@@ -30,18 +30,18 @@ class Therapist(models.Model):
     assigned_team = models.ForeignKey(Team, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.firstname
+        return f"{self.first_name} {self.surname}: {self.id}"
 
 class Patient(models.Model):
     hospital_number = models.CharField(max_length=15, unique=True)
     first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
+    surname = models.CharField(max_length=50)
     date_of_birth = models.DateField()
     postcode = models.CharField(max_length=8)
     locality = models.CharField(max_length=30)
 
     def __str__(self):
-        return self.hospital_number
+        return f"{self.first_name} {self.surname}: {self.hospital_number}"
 
 class DirectInput(models.Model):
     title = models.CharField(max_length=100)

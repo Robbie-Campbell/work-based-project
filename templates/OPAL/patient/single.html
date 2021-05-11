@@ -1,15 +1,18 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ patient.first_name }}{% endblock %}
+{% block title %}{{ patient }}{% endblock %}
 
 {% block content %}
-    <h1>{{ patient.first_name }}</h1>
+    <h1>{{ patient }}</h1>
     <p>Direct Average Time: {{ direct_average }}</p>
     <p>Indirect Average Time: {{ indirect_average }}</p>
-    <form action= "{% url 'patient_delete' id=patient.id %}" method="delete">
-        {% csrf_token %}
-        <button type="submit" class="btn btn-danger">Delete Patient</button>
-    </form>
+    {% if request.user.is_staff %}
+        <form action= "{% url 'patient_delete' id=patient.id %}" method="delete">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Delete Patient</button>
+        </form>
+        <a class="btn btn-info" href="{% url 'patient_edit' id=patient.id %}">Edit Patient</a>
+    {% endif %}
     {% for therapy in therapies %}
         <h4>Therapy ID: {{ therapy.id }}</h4>
         <p>Therapist: {{ therapy.therapist.firstname }} {{ therapy.therapist.surname }}</p>
