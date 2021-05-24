@@ -53,7 +53,10 @@ def patient_delete(request, id):
 @login_required
 def patient_search(request):
     q = request.GET.get('q')
+    messages = False
     object_list = Patient.objects.filter(
         Q(first_name__icontains=q) | Q(surname__icontains=q) | Q(hospital_number__icontains=q)
     )
-    return render(request, 'OPAL/patient/list.html', {"patients": object_list})
+    if len(object_list) == 0:
+        messages = True
+    return render(request, 'OPAL/patient/list.html', {"patients": object_list, "messages": messages})

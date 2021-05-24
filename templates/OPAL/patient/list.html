@@ -3,6 +3,7 @@
 {% block title %}Patients{% endblock %}
 
 {% block content %}
+    <div class="container">
     <h1>List of Patients</h1>
     <div class="input-group mb-3">
         <form class="form-inline my-2 my-lg-0 flex" action="{% url 'OPAL:patient_search' %}" method="get">
@@ -13,16 +14,30 @@
     </div>
     {% if patients %}
         {% for patient in patients %}
-            <h1>{{ patient }}</h1>
-            <a class="btn btn-primary" href="{{ patient.get_absolute_url }}">View Patient</a>
-            {% if request.user.is_staff %}
-                <a class="btn btn-info" href="{% url 'OPAL:patient_edit' id=patient.id %}">Edit Patient</a>
-                <form action= "{% url 'OPAL:patient_delete' id=patient.id %}" method="delete">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-danger">Delete Patient</button>
-                </form>
-                <a class="btn btn-warning" href="{% url 'services:service_options' id=patient.id %}">Services</a>
-            {% endif %}
+        <div class="card font-weight-normal">
+            <div class="card-header nhs-blue-text">
+            {{ patient }}
+            </div>
+            <ul class="list-group list-group-flush">
+              <a class="list-group-item btn btn-outline-primary text-left" href="{{ patient.get_absolute_url }}">View Patient</a>
+              {% if request.user.is_staff %}
+              <a class="list-group-item btn btn-outline-primary text-left" href="{% url 'OPAL:patient_edit' id=patient.id %}">Edit Patient</a>
+              <a class="list-group-item btn btn-outline-primary text-left" href="{% url 'services:service_options' id=patient.id %}">Services</a>
+              <form action= "{% url 'OPAL:patient_delete' id=patient.id %}" method="delete">
+                {% csrf_token %}
+                <button style="width:100%;" type="submit" class="list-group-item btn btn-outline-danger text-left">Delete Patient</button>
+              </form>
+              {% endif %}
+            </ul>
+        </div>
         {% endfor %}
     {% endif %}
+    {% if messages %}
+        <div class="card font-weight-normal">
+            <div class="card-header nhs-blue-text">
+                <h1>No Results Found</h1>
+            </div>
+        </div>
+    {% endif %}
+    </div>
 {% endblock %}

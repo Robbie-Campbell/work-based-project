@@ -294,6 +294,11 @@ Testing css
 
 */
 
+.stylish-links{
+    text-decoration: inherit;
+    color:#005EB8;
+}
+
 #CQCroundup{
     display:flex; 
     flex-direction: row; 

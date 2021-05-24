@@ -3,30 +3,33 @@
 {% block title %}{{ patient }}{% endblock %}
 
 {% block content %}
-    <h1>{{ patient }}</h1>
-    <p>Direct Average Time: {{ direct_average }}</p>
-    <p>Indirect Average Time: {{ indirect_average }}</p>
-    {% if request.user.is_staff %}
-        <form action= "{% url 'OPAL:patient_delete' id=patient.id %}" method="delete">
+<div class="container">
+    <div class="card font-weight-normal">
+        <div class="card-header nhs-blue-text">
+        {{ patient }}
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item pl-3">Direct Average Time: {{ direct_average }}</li>
+          <li class="list-group-item pl-3">Indirect Average Time: {{ indirect_average }}</li>
+          <li class="list-group-item pl-3">
+              <strong>Personal Information:</strong><br>
+              Hospital Number: {{ patient.hospital_number }}<br>
+              Date of Birth: {{ patient.date_of_birth }}<br>
+              Postcode: {{ patient.postcode }}<br>
+              Locality: {{ patient.locality }}
+          </li>
+
+
+          {% if request.user.is_staff %}
+          <a class="list-group-item pl-3 btn btn-outline-primary text-left" href="{% url 'OPAL:therapy_list_patient' id=patient.id %}">List of Previous Therapies</a>
+          <a class="list-group-item pl-3 btn btn-outline-primary text-left" href="{% url 'services:service_options' id=patient.id %}">Services</a>
+          <a class="list-group-item pl-3 btn btn-outline-warning text-left" href="{% url 'OPAL:patient_edit' id=patient.id %}">Edit Patient</a>
+          <form action= "{% url 'OPAL:patient_delete' id=patient.id %}" method="delete">
             {% csrf_token %}
-            <button type="submit" class="btn btn-danger">Delete Patient</button>
-        </form>
-        <a class="btn btn-info" href="{% url 'OPAL:patient_edit' id=patient.id %}">Edit Patient</a>
-        <a class="btn btn-warning" href="{% url 'services:service_options' id=patient.id %}">Services</a>
-        <a class="btn btn-success" href="{% url 'services:pathway_list' id=patient.id %}">Pathways</a>
-    {% endif %}
-    {% for therapy in therapies %}
-        <h4>Therapy ID: {{ therapy.id }}</h4>
-        <p>Therapist: {{ therapy.therapist.firstname }} {{ therapy.therapist.surname }}</p>
-        <p>Rehab: {{ therapy.rehab }}</p>
-        {% if therapy.direct_input %}
-            <p>Direct Assessment Type: {{ therapy.direct_input }}</p>
-            <p>Duration: {{ therapy.direct_time }}</p>
-        {% endif %}
-        {% if therapy.indirect_input %}
-            <p>Indirect Assessment Type: {{ therapy.indirect_input }}</p>
-            <p>Duration: {{ therapy.indirect_time }}</p>
-        {% endif %}
-        <a class="btn btn-info" href="{% url 'OPAL:therapy_single' id=therapy.id %}">View this Therapy</a>
-    {% endfor %}
+            <button style="width:100%;" type="submit" class="list-group-item pl-3 btn btn-outline-danger text-left">Delete Patient</button>
+          </form>
+          {% endif %}
+        </ul>
+    </div>
+</div>
 {% endblock %}

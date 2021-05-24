@@ -3,16 +3,18 @@
 {% block title %}Patient Services{% endblock %}
 
 {% block content %}
-<div class="card m-5 font-weight-normal">
-    <div class="card-header nhs-blue-text">
-      Patient Services
-    </div>
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item"><a href="{% url 'OPAL:therapy_create' id=patient.id %}">Create Therapy</a></li>
-      <li class="list-group-item"><a href="{% url 'services:pathway_create' id=patient.id %}">Create Pathway</a></li>
-      <li class="list-group-item">Create Referral</li>
-      <li class="list-group-item"><a href="{% url 'services:D2A_create' id=patient.id %}">Create D2A</a></li>
-      <li class="list-group-item">Discharge Patient</li>
-    </ul>
+<div class="container">
+  <div class="card font-weight-normal">
+      <div class="card-header nhs-blue-text">
+        Patient Services
+      </div>
+      <ul class="list-group list-group-flush">
+        <a class="list-group-item btn btn-outline-primary text-left" href="{% url 'OPAL:therapy_create' id=patient.id %}">Create Therapy</a>
+        <a class="list-group-item btn btn-outline-primary text-left" href="{% url 'services:pathway_create' id=patient.id %}">Create Pathway</a>
+        <a class="list-group-item btn btn-outline-primary text-left">Create Referral</a>
+        <a class="list-group-item btn btn-outline-primary text-left" href="{% url 'services:D2A_create' id=patient.id %}">Create D2A</a>
+        <a class="list-group-item btn btn-outline-primary text-left">Discharge Patient</a>
+      </ul>
+  </div>
 </div>
 {% endblock %}

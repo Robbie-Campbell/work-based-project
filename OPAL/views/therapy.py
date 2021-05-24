@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from ..models import Therapy, Patient
+from ..models import Therapy, Patient, Therapist
 from ..forms import TherapyForm
 from django.shortcuts import redirect
 from django.db.models import Q
@@ -12,8 +12,16 @@ def therapy_single(request, id):
     return render(request, "OPAL/therapy/single.html", {"therapy": therapy})
 
 @login_required
-def therapy_list(request):
-    return render(request, "OPAL/therapy/list.html")
+def therapy_list_patient(request, id):
+    patient = Patient.objects.get(id=id)
+    therapies = Therapy.objects.filter(patient=patient)
+    return render(request, "OPAL/therapy/list.html", {"patient": patient, "therapies": therapies})
+
+@login_required
+def therapy_list_therapist(request, id):
+    therapist = Therapist.objects.get(id=id)
+    therapies = Therapy.objects.filter(therapist=therapist)
+    return render(request, "OPAL/therapy/list.html", {"therapist": therapist, "therapies": therapies})
 
 @staff_member_required(login_url="/login/")
 def therapy_create(request, id):

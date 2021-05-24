@@ -54,7 +54,10 @@ def therapist_delete(request, id):
 @login_required
 def therapist_search(request):
     q = request.GET.get('q')
+    messages = ""
     object_list = Therapist.objects.filter(
         Q(first_name__icontains=q) | Q(surname__icontains=q) | Q(id__icontains=q)
     )
-    return render(request, 'OPAL/therapist/list.html', {"therapists": object_list})
+    if len(object_list) == 0:
+        messages = True
+    return render(request, 'OPAL/therapist/list.html', {"therapists": object_list, "messages": messages})

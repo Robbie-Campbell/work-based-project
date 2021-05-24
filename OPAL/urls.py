@@ -23,7 +23,8 @@ urlpatterns = [
     
     # Therapy URLS
     path("therapy/<int:id>/", views.therapy_single, name="therapy_single"),
-    path("therapy/", views.therapy_list, name="therapy_list"),
+    path("therapy/list/patient/<int:id>/", views.therapy_list_patient, name="therapy_list_patient"),
+    path("therapy/list/therapist/<int:id>/", views.therapy_list_therapist, name="therapy_list_therapist"),
     path("therapy/search/", views.therapy_search, name="therapy_search"),
     path("therapy/create/<int:id>/", views.therapy_create, name="therapy_create"),
     path("therapy/edit/<int:id>/", views.therapy_edit, name="therapy_edit"),
