@@ -4,10 +4,12 @@
 
 {% block content %}
 <div class="ml-5 mr-5">
+    <h3 style="border-bottom:2px solid #CCC;">D2A for: {{patient.first_name}} {{ patient.surname }}</h3>
     {% for D2A in D2As %}
-        <h3 style="border-bottom:2px solid #CCC;">D2A for: {{D2A.patient.first_name}} {{ D2A.patient.surname }}</h3>
-        <h5>Therapist Completing D2A: {{ D2A.therapist_completing_D2A }}</h5>
+    <div style="border-bottom:2px solid #CCC;">
+        <h5>Therapist Completing D2A: <strong>{{ D2A.therapist_completing_d2a }}</strong></h5>
         <h5>D2A Completion Date: {{ D2A.D2A_completion_date }}</h5>  
+    </div>
     {% endfor %}
 </div>
 {% endblock %}

@@ -24,4 +24,4 @@ def D2A_create(request, id):
 def D2A_list(request, id):
     patient = Patient.objects.get(id=id)
     D2As = D2A.objects.filter(patient=patient).order_by("created_at")
-    return render(request, "services/D2A/single.html", {"D2As":D2As})
+    return render(request, "services/D2A/list.html", {"D2As":D2As, "patient":patient})
