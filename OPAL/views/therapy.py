@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from ..models import Therapy
+from ..models import Therapy, Patient
 from ..forms import TherapyForm
 from django.shortcuts import redirect
 from django.db.models import Q
@@ -13,16 +13,17 @@ def therapy_single(request, id):
 
 @login_required
 def therapy_list(request):
-    therapies = Therapy.objects.all()
-    return render(request, "OPAL/therapy/list.html", {"therapies": therapies})
+    return render(request, "OPAL/therapy/list.html")
 
 @staff_member_required(login_url="/login/")
-def therapy_create(request):
+def therapy_create(request, id):
     if request.method == "POST":
         form = TherapyForm(request.POST)
         if form.is_valid():
+            task = form.save(commit=False)
+            task.patient = Patient.objects.get(id=id)
             task = form.save()
-            return redirect("therapy_single", id=task.id)
+            return redirect("OPAL:therapy_single", id=task.id)
     else:
         form = TherapyForm()
     return render(request, "OPAL/therapy/create.html", {"form":form})
@@ -35,7 +36,7 @@ def therapy_edit(request, id):
         form = TherapyForm(request.POST, instance=therapy)
         if form.is_valid():
             form.save()
-            return redirect("therapy_single", id=id)
+            return redirect("OPAL:therapy_single", id=id)
     else:
         data = {"patient": therapy.patient, "therapist": therapy.therapist, 
                 "rehab": therapy.rehab, "direct_input": therapy.direct_input, 
@@ -47,7 +48,7 @@ def therapy_edit(request, id):
 def therapy_delete(request, id):
     therapy = Therapy.objects.get(id=id)
     therapy.delete()
-    return redirect('therapy_list')
+    return redirect('OPAL:therapy_list')
 
 @login_required
 def therapy_search(request):

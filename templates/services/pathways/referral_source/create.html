@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Create Referral Source{% endblock %}
+
+{% block content %}
+{% load crispy_forms_tags %}
+    <div class="container text-center">
+        <form method="POST" class="form-group">
+            {% csrf_token %}
+            {{form|crispy}}
+            <input type="hidden" name="next" value="{{ request.GET.next }}">
+            <button class="btn btn-success mt-2">Create Referral Source</button>
+        </form>
+    </div>
+{% endblock %}

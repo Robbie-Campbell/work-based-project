@@ -16,28 +16,27 @@ def patient_single(request, id):
 
 @login_required
 def patient_list(request):
-    patients = Patient.objects.all()
-    return render(request, "OPAL/patient/list.html", {"patients": patients})
+    return render(request, "OPAL/patient/list.html")
 
-@staff_member_required(redirect_field_name="/OPAL/not_allowed")
+@staff_member_required(login_url="/login/")
 def patient_create(request):
     if request.method == "POST":
         form = PatientForm(request.POST)
         if form.is_valid():
             task = form.save()
-            return redirect("patient_single", id=task.id)
+            return redirect("OPAL:patient_single", id=task.id)
     else:
         form = PatientForm()
     return render(request, "OPAL/patient/create.html", {"form":form})
 
-@staff_member_required(login_url="/login/", redirect_field_name="/")
+@staff_member_required(login_url="/login/")
 def patient_edit(request, id):
     patient = Patient.objects.get(id=id)
     if request.method == "POST":
         form = PatientForm(request.POST, instance=patient)
         if form.is_valid():
             form.save()
-            return redirect("patient_single", id=id)
+            return redirect("OPAL:patient_single", id=id)
     else:
         data = {"hospital_number": patient.hospital_number, "first_name": patient.first_name,
                 "surname": patient.surname, "date_of_birth": patient.date_of_birth,
@@ -45,11 +44,11 @@ def patient_edit(request, id):
         form = PatientForm(initial=data)
     return render(request, "OPAL/patient/edit.html", {"form":form, "patient": patient})
 
-@staff_member_required(login_url="/login/", redirect_field_name="/")
+@staff_member_required(login_url="/login/")
 def patient_delete(request, id):
     patient = Patient.objects.get(id=id)
     patient.delete()
-    return redirect('patient_list')
+    return redirect('OPAL:patient_list')
 
 @login_required
 def patient_search(request):

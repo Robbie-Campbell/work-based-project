@@ -16,13 +16,13 @@
     {% else %}
         <h5>No further information</h5>
     {% endif %}
-    <a class="btn btn-primary" href="{% url 'patient_single' id=therapy.patient.id %}">View Patient</a>
-    <a class="btn btn-success" href="{% url 'therapist_single' id=therapy.therapist.id %}">View Therapist</a>
+    <a class="btn btn-primary" href="{% url 'OPAL:patient_single' id=therapy.patient.id %}">View Patient</a>
+    <a class="btn btn-success" href="{% url 'OPAL:therapist_single' id=therapy.therapist.id %}">View Therapist</a>
     {% if request.user.is_staff %}
-        <form action="{% url 'therapy_delete' id=therapy.id %}" method="DELETE">
+        <form action="{% url 'OPAL:therapy_delete' id=therapy.id %}" method="DELETE">
             {% csrf_token %}
             <button type="submit" class="btn btn-danger">Delete Therapy</button>
         </form>
-        <a class="btn btn-info" href="{% url 'therapy_edit' id=therapy.id %}">Edit Therapy</a>
+        <a class="btn btn-info" href="{% url 'OPAL:therapy_edit' id=therapy.id %}">Edit Therapy</a>
     {% endif %}
 {% endblock %}

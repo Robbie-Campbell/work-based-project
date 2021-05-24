@@ -7,11 +7,13 @@
     <p>Direct Average Time: {{ direct_average }}</p>
     <p>Indirect Average Time: {{ indirect_average }}</p>
     {% if request.user.is_staff %}
-        <form action= "{% url 'patient_delete' id=patient.id %}" method="delete">
+        <form action= "{% url 'OPAL:patient_delete' id=patient.id %}" method="delete">
             {% csrf_token %}
             <button type="submit" class="btn btn-danger">Delete Patient</button>
         </form>
-        <a class="btn btn-info" href="{% url 'patient_edit' id=patient.id %}">Edit Patient</a>
+        <a class="btn btn-info" href="{% url 'OPAL:patient_edit' id=patient.id %}">Edit Patient</a>
+        <a class="btn btn-warning" href="{% url 'services:service_options' id=patient.id %}">Services</a>
+        <a class="btn btn-success" href="{% url 'services:pathway_list' id=patient.id %}">Pathways</a>
     {% endif %}
     {% for therapy in therapies %}
         <h4>Therapy ID: {{ therapy.id }}</h4>
@@ -25,6 +27,6 @@
             <p>Indirect Assessment Type: {{ therapy.indirect_input }}</p>
             <p>Duration: {{ therapy.indirect_time }}</p>
         {% endif %}
-        <a class="btn btn-info" href="{% url 'therapy_single' id=therapy.id %}">View this Therapy</a>
+        <a class="btn btn-info" href="{% url 'OPAL:therapy_single' id=therapy.id %}">View this Therapy</a>
     {% endfor %}
 {% endblock %}

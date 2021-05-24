@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Pathway List{% endblock %}
+
+{% block content %}
+<div class="ml-5 mr-5">
+    <h3 style="border-bottom:2px solid #CCC;">Pathways for: {{patient.first_name}} {{ patient.surname }}</h3>
+        {% for pathway in pathways %}
+        <div style="border-bottom:2px solid #CCC;">
+            <h5>Admission Date: {{ pathway.admission_date }}</h5>
+            <h5>Referral Source: {{ pathway.referral_source }}</h5>
+            <h5>Front Door: {{ pathway.front_door }}</h5>
+            <h5>RAFT: {{ pathway.RAFT }}</h5>
+            <h5>CCMT: {{ pathway.CCMT }}</h5>
+            <h5>CCMT_Date: {{ pathway.CCMT_Date }}</h5>
+            <h5>Admission Barthel: {{ pathway.admission_barthel }}</h5>
+            <h5>Discharge Barthel: {{ pathway.discharge_barthel }}</h5>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}

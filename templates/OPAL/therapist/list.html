@@ -3,8 +3,9 @@
 {% block title %}Therapists{% endblock %}
 
 {% block content %}
+    <h1>List of Therapists</h1>
     <div class="input-group mb-3">
-        <form class="form-inline my-2 my-lg-0 flex" action="{% url 'therapist_search' %}" method="get">
+        <form class="form-inline my-2 my-lg-0 flex" action="{% url 'OPAL:therapist_search' %}" method="get">
             {% csrf_token %}
             <input name="q" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
@@ -12,10 +13,10 @@
     </div>
     {% for therapist in therapists %}
         <h1>{{ therapist.first_name }}</h1>
-        <a class="btn btn-primary" href="{% url 'therapist_single' id=therapist.id %}">View More?</a>
+        <a class="btn btn-primary" href="{{ therapist.get_absolute_url }}">View More?</a>
         {% if request.user.is_staff %}
-            <a class="btn btn-info" href="{% url 'therapist_edit' id=therapist.id %}">Edit Therapist</a>
-            <form action="{% url 'therapist_delete' id=therapist.id %}" method="delete">
+            <a class="btn btn-info" href="{% url 'OPAL:therapist_edit' id=therapist.id %}">Edit Therapist</a>
+            <form action="{% url 'OPAL:therapist_delete' id=therapist.id %}" method="delete">
                 {% csrf_token %}
                 <button type="submit" class="btn btn-danger">Delete Therapist</button>
             </form>

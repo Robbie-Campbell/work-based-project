@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}D2A{% endblock %}
+
+{% block content %}
+<div class="ml-5 mr-5">
+    {% for D2A in D2As %}
+        <h3 style="border-bottom:2px solid #CCC;">D2A for: {{D2A.patient.first_name}} {{ D2A.patient.surname }}</h3>
+        <h5>Therapist Completing D2A: {{ D2A.therapist_completing_D2A }}</h5>
+        <h5>D2A Completion Date: {{ D2A.D2A_completion_date }}</h5>  
+    {% endfor %}
+</div>
+{% endblock %}

@@ -11,6 +11,7 @@ class TherapyForm(ModelForm):
     class Meta:
         model = Therapy
         fields = "__all__"
+        exclude = ["patient"]
 
 class TherapistForm(ModelForm):
     class Meta:

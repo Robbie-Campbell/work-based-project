@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 class Team(models.Model):
     team_name = models.CharField(max_length=50)
@@ -32,6 +33,9 @@ class Therapist(models.Model):
     def __str__(self):
         return f"{self.first_name} {self.surname}: {self.id}"
 
+    def get_absolute_url(self):
+        return reverse('OPAL:therapist_single', args=[str(self.id)])
+
 class Patient(models.Model):
     hospital_number = models.CharField(max_length=15, unique=True)
     first_name = models.CharField(max_length=50)
@@ -42,6 +46,9 @@ class Patient(models.Model):
 
     def __str__(self):
         return f"{self.first_name} {self.surname}: {self.hospital_number}"
+    
+    def get_absolute_url(self):
+        return reverse('OPAL:patient_single', args=[str(self.id)])
 
 class DirectInput(models.Model):
     title = models.CharField(max_length=100)
@@ -69,3 +76,6 @@ class Therapy(models.Model):
 
     def __str__(self):
         return str(self.id)
+
+    def get_absolute_url(self):
+        return reverse('OPAL:therapy_single', args=[str(self.id)])

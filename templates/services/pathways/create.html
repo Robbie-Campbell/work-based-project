@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Creating Pathway{% endblock %}
+
+{% block content %}
+{% load crispy_forms_tags %}
+    <a class="btn btn-info" href="{% url 'services:referral_create' id=patient.id %}">Create New Referral Source</a>
+    <div class="container text-center">
+        <form method="POST" class="form-group">
+            {% csrf_token %}
+            {{form|crispy}}
+            <button class="btn btn-success mt-2">Create Pathway</button>
+        </form>
+    </div>
+{% endblock %}

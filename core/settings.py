@@ -17,6 +17,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'OPAL',
+    'navigation',
+    'services',
     'crispy_forms',
 ]
 

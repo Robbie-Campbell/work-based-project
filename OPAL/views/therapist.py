@@ -8,8 +8,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 
 @login_required
 def therapist_list(request):
-    therapists = Therapist.objects.all()
-    return render(request, "OPAL/therapist/list.html", {"therapists": therapists})
+    return render(request, "OPAL/therapist/list.html")
     
 @login_required
 def therapist_single(request, id):
@@ -25,7 +24,7 @@ def therapist_create(request):
         form = TherapistForm(request.POST)
         if form.is_valid():
             task = form.save()
-            return redirect("therapist_single", id=task.id)
+            return redirect("OPAL:therapist_single", id=task.id)
     else:
         form = TherapistForm()
     return render(request, "OPAL/therapist/create.html", {"form":form})
@@ -38,7 +37,7 @@ def therapist_edit(request, id):
         form = TherapistForm(request.POST, instance=therapist)
         if form.is_valid():
             form.save()
-            return redirect("therapist_single", id=id)
+            return redirect("OPAL:therapist_single", id=id)
     else:
         data = {"first_name": therapist.first_name, "surname": therapist.surname, 
                 "Therapist_role": therapist.therapist_role, "band": therapist.band, 
@@ -50,7 +49,7 @@ def therapist_edit(request, id):
 def therapist_delete(request, id):
     therapist = Therapist.objects.get(id=id)
     therapist.delete()
-    return redirect('therapist_list')
+    return redirect('OPAL:therapist_list')
 
 @login_required
 def therapist_search(request):
