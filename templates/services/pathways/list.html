@@ -3,19 +3,40 @@
 {% block title %}Pathway List{% endblock %}
 
 {% block content %}
-<div class="ml-5 mr-5">
-    <h3 style="border-bottom:2px solid #CCC;">Pathways for: {{patient.first_name}} {{ patient.surname }}</h3>
+<div class="container d-flex justify-content-center">
+    <div>
+        <div class="card-header nhs-blue-text">
+            <h3>Pathways for {{ patient }}</h3>
+        </div>
+        {% if not pathways %}
+            <a class="list-group-item pl-3 btn btn-outline-primary text-left" href="{{ patient.get_absolute_url }}">Return to Patient</a>
+        {% endif %}
         {% for pathway in pathways %}
-        <div style="border-bottom:2px solid #CCC;">
-            <h5>Admission Date: {{ pathway.admission_date }}</h5>
-            <h5>Referral Source: {{ pathway.referral_source }}</h5>
-            <h5>Front Door: {{ pathway.front_door }}</h5>
-            <h5>RAFT: {{ pathway.RAFT }}</h5>
-            <h5>CCMT: {{ pathway.CCMT }}</h5>
-            <h5>CCMT_Date: {{ pathway.CCMT_Date }}</h5>
-            <h5>Admission Barthel: {{ pathway.admission_barthel }}</h5>
-            <h5>Discharge Barthel: {{ pathway.discharge_barthel }}</h5>
+        <div class="card font-weight-normal mt-3">
+            <div class="card-header nhs-blue-text">
+                Pathway ID {{ pathway.id }}
+            </div>
+            <ul class="list-group list-group-flush">
+            <li class="list-group-item pl-3">
+                Admission Date: {{ pathway.admission_date }}<br>
+                Referral Source: {{ pathway.referral_source }}<br>
+                Front Door: {{ pathway.front_door }}<br>
+                RAFT: {{ pathway.RAFT }}<br>
+                CCMT: {{ pathway.CCMT }}<br>
+                CCMT_Date: {{ pathway.CCMT_Date }}<br>
+                Admission Barthel: {{ pathway.admission_barthel }}<br>
+                Discharge Barthel: {{ pathway.discharge_barthel }}<br>
+            </li>
+            <a class="list-group-item pl-3 btn btn-outline-primary text-left" href="{{ patient.get_absolute_url }}">Return to Patient</a>
+            {% if request.user.is_staff %}
+            <form action= "{% url 'services:pathway_delete' id=pathway.id %}" method="DELETE">
+                {% csrf_token %}
+                <button style="width:100%;" type="submit" class="list-group-item pl-3 btn btn-outline-danger text-left">Delete Pathway</button>
+            </form>
+            {% endif %}
+            </ul>
         </div>
         {% endfor %}
     </div>
+</div>
 {% endblock %}

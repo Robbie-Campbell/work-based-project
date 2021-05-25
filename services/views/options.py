@@ -3,6 +3,11 @@ from django.contrib.admin.views.decorators import staff_member_required
 from OPAL.models import Patient
 
 @staff_member_required(login_url="/login/")
-def service_options(request, id):
+def add_service(request, id):
     patient = Patient.objects.get(id=id)
-    return render(request, "services/options.html", {"patient": patient})
+    return render(request, "services/add_service.html", {"patient": patient})
+
+@staff_member_required(login_url="/login/")
+def view_services(request, id):
+    patient = Patient.objects.get(id=id)
+    return render(request, "services/view_services.html", {"patient": patient})

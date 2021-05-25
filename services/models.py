@@ -34,3 +34,36 @@ class D2A(models.Model):
 
     def __str__(self):
         return f"{self.patient.first_name} {self.patient.surname}: D2A"
+
+class Referral(models.Model):
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
+    type_of_referral = models.CharField(max_length=50)
+    therapist_referring = models.ForeignKey(Therapist, on_delete=models.CASCADE)
+    referral_date = models.DateField()
+    initial_contact_date = models.DateField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.patient.first_name} {self.patient.surname}: Referral"
+
+class DischargeService(models.Model):
+    name = models.CharField(max_length=10)
+    description = models.CharField(max_length=50)
+
+    def __str__(self):
+        return f"{self.name} - {self.description}"
+
+class Discharge(models.Model):
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
+    date_no_reside = models.DateField()
+    discharge_date = models.DateField()
+    discharge_service = models.ForeignKey(DischargeService, on_delete=models.CASCADE)
+    delay_discharge = models.BooleanField(default=False)
+    delay_reason = models.TextField(null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.patient.first_name} {self.patient.surname}: Discharge"
+

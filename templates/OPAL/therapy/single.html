@@ -3,10 +3,10 @@
 {% block title %}{{ therapy.id }}{% endblock %}
 
 {% block content %}
-<div class="container">
+<div class="container d-flex justify-content-center">
     <div class="card font-weight-normal">
         <div class="card-header nhs-blue-text">
-            {{ therapy.patient }}
+            Patient: {{ therapy.patient }}
         </div>
         <ul class="list-group list-group-flush">
           <li class="list-group-item pl-3">Therapy ID: {{ therapy.id }}</li>
@@ -22,8 +22,8 @@
 
 
           {% if request.user.is_staff %}
-          <a class="list-group-item pl-3 btn btn-outline-primary text-left" href="{% url 'OPAL:patient_single' id=therapy.patient.id %}">Get Patient Information</a>
-          <a class="list-group-item pl-3 btn btn-outline-primary text-left" href="{% url 'OPAL:therapist_single' id=therapy.therapist.id %}">Get Therapist Information</a>
+          <a class="list-group-item pl-3 btn btn-outline-primary text-left" href="{% url 'OPAL:patient_single' id=therapy.patient.id %}">View Patient</a>
+          <a class="list-group-item pl-3 btn btn-outline-primary text-left" href="{% url 'OPAL:therapist_single' id=therapy.therapist.id %}">View Therapist</a>
           <a class="list-group-item pl-3 btn btn-outline-warning text-left" href="{% url 'OPAL:therapy_edit' id=therapy.id %}">Edit Therapy</a>
           <form action= "{% url 'OPAL:therapy_delete' id=therapy.id %}" method="delete">
             {% csrf_token %}

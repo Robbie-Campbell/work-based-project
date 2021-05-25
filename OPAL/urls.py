@@ -29,4 +29,8 @@ urlpatterns = [
     path("therapy/create/<int:id>/", views.therapy_create, name="therapy_create"),
     path("therapy/edit/<int:id>/", views.therapy_edit, name="therapy_edit"),
     path("therapy/delete/<int:id>/", views.therapy_delete, name="therapy_delete"),
+
+    # Create Direct and Indirect Input URLS
+    path("therapy/create/indirect_input/<int:id>/", views.indirect_input_create, name="indirect_input_create"),
+    path("therapy/create/direct_input/<int:id>/", views.direct_input_create, name="direct_input_create"),
 ]

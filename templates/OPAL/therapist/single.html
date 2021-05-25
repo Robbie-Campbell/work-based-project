@@ -3,20 +3,20 @@
 {% block title %}{{ therapist }}{% endblock %}
 
 {% block content %}
-<div class="container">
+<div class="container d-flex justify-content-center">
     <div class="card font-weight-normal">
         <div class="card-header nhs-blue-text">
             {{ therapist }}
         </div>
         <ul class="list-group list-group-flush">
-          <li class="list-group-item pl-3">Direct Average Time: {{ direct_average }} Minutes.</li>
-          <li class="list-group-item pl-3">Indirect Average Time: {{ indirect_average }} Minutes.</li>
           <li class="list-group-item pl-3">
               <strong>Therapist Information:</strong><br>
               Therapist Role: {{ therapist.therapist_role }}<br>
               Band: {{ therapist.band }}<br>
               Assigned Team: {{ therapist.assigned_team }}<br>
           </li>
+          <li class="list-group-item pl-3"><strong>Direct Average Time: {% if direct_average is None %} No Data Collected {% else %} {{ direct_average }} mins. {% endif %}</strong></li>
+          <li class="list-group-item pl-3"><strong>Indirect Average Time: {% if indirect_average is None %} No Data Collected {% else %} {{ indirect_average }} mins. {% endif %}</strong></li>
           {% if request.user.is_staff %}
           <a class="list-group-item pl-3 btn btn-outline-primary text-left" href="{% url 'OPAL:therapy_list_therapist' id=therapist.id %}">List Therapist's Therapies</a>
             <a class="list-group-item pl-3 btn btn-outline-warning text-left" href="{% url 'OPAL:therapist_edit' id=therapist.id %}">Edit This Therapists Information</a>

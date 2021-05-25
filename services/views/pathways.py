@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from ..forms import PathwayForm, ReferralForm
+from ..forms import PathwayForm, ReferralSourceForm
 from django.shortcuts import redirect
 from django.contrib.admin.views.decorators import staff_member_required
 from OPAL.models import Patient
@@ -20,14 +20,14 @@ def pathway_create(request, id):
     return render(request, "services/pathways/create.html", {"form":form, "patient": patient})
 
 @staff_member_required(login_url="/login/")
-def referral_create(request, id):
+def referral_source_create(request, id):
     if request.method == "POST":
-        form = ReferralForm(request.POST)
+        form = ReferralSourceForm(request.POST)
         if form.is_valid():
             task = form.save()
             return redirect("services:pathway_create", id=id)
     else:
-        form = ReferralForm()
+        form = ReferralSourceForm()
     return render(request, "services/pathways/referral_source/create.html", {"form":form})
 
 @staff_member_required(login_url="/login/")
@@ -36,3 +36,8 @@ def pathway_list(request, id):
     pathways = Pathway.objects.filter(patient=patient).order_by('-created_at')
     return render(request, "services/pathways/list.html", {"pathways":pathways, "patient": patient})
 
+@staff_member_required(login_url="/login/")
+def pathway_delete(request, id):
+    pathway = Pathway.objects.get(id=id)
+    pathway.delete()
+    return redirect("OPAL:patient_single", id=pathway.patient.id)

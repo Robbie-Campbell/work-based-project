@@ -1,31 +1,34 @@
 {% extends 'base.html' %}
 
-{% block title %}D2A{% endblock %}
+{% block title %}Discharge List{% endblock %}
 
 {% block content %}
 <div class="container d-flex justify-content-center">
     <div>
         <div class="card-header nhs-blue-text">
-            <h3>D2A's for {{ patient }}</h3>
+            <h3>Discharges for {{ patient }}</h3>
         </div>
-        {% if not D2As %}
+        {% if not discharges %}
             <a class="list-group-item pl-3 btn btn-outline-primary text-left" href="{{ patient.get_absolute_url }}">Return to Patient</a>
         {% endif %}
-        {% for D2A in D2As %}
+        {% for discharge in discharges %}
         <div class="card font-weight-normal mt-3">
             <div class="card-header nhs-blue-text">
-                D2A ID {{ D2A.id }}
+                Discharge ID {{ discharge.id }}
             </div>
             <ul class="list-group list-group-flush">
             <li class="list-group-item pl-3">
-                Therapist Completing D2A: {{ D2A.therapist_completing_d2a }}<br>
-                D2A Completion Date: {{ D2A.D2A_completion_date }}<br>
+                Date no Reside: {{ discharge.date_no_reside }}<br>
+                Discharge Date: {{ discharge.discharge_date }}<br>
+                Discharge Service: {{ discharge.discharge_service }}<br>
+                Discharge Delayed: {{ discharge.delay_discharge }}<br>
+                Delay: {{ discharge.delay_reason }}<br>
             </li>
             <a class="list-group-item pl-3 btn btn-outline-primary text-left" href="{{ patient.get_absolute_url }}">Return to Patient</a>
             {% if request.user.is_staff %}
-            <form action= "{% url 'services:D2A_delete' id=D2A.id %}" method="DELETE">
+            <form action= "{% url 'services:discharge_delete' id=discharge.id %}" method="DELETE">
                 {% csrf_token %}
-                <button style="width:100%;" type="submit" class="list-group-item pl-3 btn btn-outline-danger text-left">Delete D2A</button>
+                <button style="width:100%;" type="submit" class="list-group-item pl-3 btn btn-outline-danger text-left">Delete discharge</button>
             </form>
             {% endif %}
             </ul>
