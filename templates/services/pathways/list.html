@@ -23,12 +23,13 @@
                 Front Door: {{ pathway.front_door }}<br>
                 RAFT: {{ pathway.RAFT }}<br>
                 CCMT: {{ pathway.CCMT }}<br>
-                CCMT_Date: {{ pathway.CCMT_Date }}<br>
+                CCMT Date: {{ pathway.CCMT_Date }}<br>
                 Admission Barthel: {{ pathway.admission_barthel }}<br>
                 Discharge Barthel: {{ pathway.discharge_barthel }}<br>
             </li>
-            <a class="list-group-item pl-3 btn btn-outline-primary text-left" href="{{ patient.get_absolute_url }}">Return to Patient</a>
+            <a class="list-group-item pl-3 btn btn-outline-success text-left" href="{{ patient.get_absolute_url }}">Return to Patient</a>
             {% if request.user.is_staff %}
+            <a class="list-group-item pl-3 btn btn-outline-warning text-left" href="{% url 'services:pathway_edit' id=pathway.id %}">Edit Pathway</a>
             <form action= "{% url 'services:pathway_delete' id=pathway.id %}" method="DELETE">
                 {% csrf_token %}
                 <button style="width:100%;" type="submit" class="list-group-item pl-3 btn btn-outline-danger text-left">Delete Pathway</button>
@@ -37,6 +38,11 @@
             </ul>
         </div>
         {% endfor %}
+        {% if not pathways %}
+        <div class="card-header nhs-blue-text mt-5">
+            <h3>No Pathways found for {{ patient }}</h3>
+        </div>
+        {% endif %}
     </div>
 </div>
 {% endblock %}

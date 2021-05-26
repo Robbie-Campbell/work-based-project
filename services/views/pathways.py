@@ -2,6 +2,7 @@ from django.shortcuts import render
 from ..forms import PathwayForm, ReferralSourceForm
 from django.shortcuts import redirect
 from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.auth.decorators import login_required
 from OPAL.models import Patient
 from ..models import Pathway
 
@@ -20,17 +21,35 @@ def pathway_create(request, id):
     return render(request, "services/pathways/create.html", {"form":form, "patient": patient})
 
 @staff_member_required(login_url="/login/")
+def pathway_edit(request, id):
+    pathway = Pathway.objects.get(id=id)
+    if request.method == "POST":
+        form = PathwayForm(request.POST, instance=pathway)
+        if form.is_valid():
+            form.save()
+            return redirect("services:pathway_list", id=pathway.patient.id)
+    else:
+        data = {"admission_date": pathway.admission_date, "meet_criteria_therapy": pathway.meet_criteria_therapy,
+                "referral_source": pathway.referral_source, "front_door": pathway.front_door,
+                "RAFT": pathway.RAFT, "CCMT": pathway.CCMT, "CCMT_Date": pathway.CCMT_Date,
+                "admission_barthel": pathway.admission_barthel, "discharge_barthel": pathway.discharge_barthel}
+        form = PathwayForm(initial=data)
+    return render(request, "services/pathways/edit.html", {"form":form, "pathway": pathway})
+
+
+@staff_member_required(login_url="/login/")
 def referral_source_create(request, id):
+    patient = Patient.objects.get(id=id)
     if request.method == "POST":
         form = ReferralSourceForm(request.POST)
         if form.is_valid():
             task = form.save()
-            return redirect("services:pathway_create", id=id)
+            return redirect("services:pathway_create", id=patient.id)
     else:
         form = ReferralSourceForm()
-    return render(request, "services/pathways/referral_source/create.html", {"form":form})
+    return render(request, "services/pathways/referral_source/create.html", {"form":form, "patient": patient})
 
-@staff_member_required(login_url="/login/")
+@login_required
 def pathway_list(request, id):
     patient = Patient.objects.get(id=id)
     pathways = Pathway.objects.filter(patient=patient).order_by('-created_at')

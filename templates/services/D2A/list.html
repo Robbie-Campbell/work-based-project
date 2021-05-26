@@ -18,11 +18,13 @@
             </div>
             <ul class="list-group list-group-flush">
             <li class="list-group-item pl-3">
-                Therapist Completing D2A: {{ D2A.therapist_completing_d2a }}<br>
+                Therapist Completing D2A: {{ D2A.therapist_completing_D2A }}<br><br>
                 D2A Completion Date: {{ D2A.D2A_completion_date }}<br>
             </li>
-            <a class="list-group-item pl-3 btn btn-outline-primary text-left" href="{{ patient.get_absolute_url }}">Return to Patient</a>
+            <a class="list-group-item pl-3 btn btn-outline-success text-left" href="{{ patient.get_absolute_url }}">Return to Patient</a>
+            <a class="list-group-item pl-3 btn btn-outline-primary text-left" href="{% url 'OPAL:therapist_single' id=D2A.therapist_completing_D2A.id %}">View Therapist</a>
             {% if request.user.is_staff %}
+            <a class="list-group-item pl-3 btn btn-outline-warning text-left" href="{% url 'services:D2A_edit' id=D2A.id %}">Edit this D2A</a>
             <form action= "{% url 'services:D2A_delete' id=D2A.id %}" method="DELETE">
                 {% csrf_token %}
                 <button style="width:100%;" type="submit" class="list-group-item pl-3 btn btn-outline-danger text-left">Delete D2A</button>

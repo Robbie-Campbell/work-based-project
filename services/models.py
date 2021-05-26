@@ -27,7 +27,7 @@ class Pathway(models.Model):
 
 class D2A(models.Model):
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
-    therapist_completing_d2a = models.ForeignKey(Therapist, on_delete=models.CASCADE)
+    therapist_completing_D2A = models.ForeignKey(Therapist, on_delete=models.CASCADE)
     D2A_completion_date = models.DateField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

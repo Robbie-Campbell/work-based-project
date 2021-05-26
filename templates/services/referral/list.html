@@ -23,8 +23,9 @@
                 Referral Date: {{ referral.referral_date }}<br>
                 Initial Contact Date: {{ referral.initial_contact_date }}<br>
             </li>
-            <a class="list-group-item pl-3 btn btn-outline-primary text-left" href="{{ patient.get_absolute_url }}">Return to Patient</a>
+            <a class="list-group-item pl-3 btn btn-outline-success text-left" href="{{ patient.get_absolute_url }}">Return to Patient</a>
             {% if request.user.is_staff %}
+            <a class="list-group-item pl-3 btn btn-outline-warning text-left" href="{% url 'services:referral_edit' id=referral.id %}">Edit Referral</a>
             <form action= "{% url 'services:referral_delete' id=referral.id %}" method="DELETE">
                 {% csrf_token %}
                 <button style="width:100%;" type="submit" class="list-group-item pl-3 btn btn-outline-danger text-left">Delete referral</button>
@@ -33,6 +34,11 @@
             </ul>
         </div>
         {% endfor %}
+        {% if not referrals %}
+        <div class="card-header nhs-blue-text mt-5">
+            <h3>No Referrals found for {{ patient }}</h3>
+        </div>
+        {% endif %}
     </div>
 </div>
 {% endblock %}

@@ -2,6 +2,7 @@ from django.shortcuts import render
 from ..forms import D2AForm
 from django.shortcuts import redirect
 from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.auth.decorators import login_required
 from OPAL.models import Patient
 from ..models import D2A
 
@@ -19,11 +20,23 @@ def D2A_create(request, id):
         form = D2AForm()
     return render(request, "services/D2A/create.html", {"form":form, "patient": patient})
 
-
 @staff_member_required(login_url="/login/")
+def D2A_edit(request, id):
+    d2a = D2A.objects.get(id=id)
+    if request.method == "POST":
+        form = D2AForm(request.POST, instance=d2a)
+        if form.is_valid():
+            form.save()
+            return redirect("services:D2A_list", id=d2a.patient.id)
+    else:
+        data = {"therapist_completing_D2A": d2a.therapist_completing_D2A, "D2A_completion_date": d2a.D2A_completion_date}
+        form = D2AForm(initial=data)
+    return render(request, "services/D2A/edit.html", {"form":form, "D2A": d2a})
+
+@login_required
 def D2A_list(request, id):
     patient = Patient.objects.get(id=id)
-    D2As = D2A.objects.filter(patient=patient).order_by("-created_at")
+    D2As = D2A.objects.filter(patient=patient).order_by("-updated_at", "-created_at")
     return render(request, "services/D2A/list.html", {"D2As":D2As, "patient":patient})
 
 @staff_member_required(login_url="/login/")

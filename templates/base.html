@@ -7,8 +7,9 @@
     <title>NHS - {% block title %}{% endblock %}</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/footer.css' %}">
     <link rel="stylesheet" href="{% static 'css/form.css' %}">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
 </head>
 
 <body>
@@ -27,12 +28,10 @@
                     <a class="nav-link" href="{% url 'navigation:options' %}">Access Database</a>
                 </li>
                 {% endif %}
-                {% if request.user.administrator %}
-                <li class="nav-item {% if request.path == '/view/' %}active{% endif %}">
-                    <a class="nav-link" href="#">View Data</a>
-                </li>
-                {% endif %}
                 {% if user.is_authenticated %}
+                <li class="nav-item {% if request.path == '/view/' %}active{% endif %}">
+                    <a class="nav-link" href="{% url 'navigation:options' %}">View Data</a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'logout' %}">Logout</a>
                 </li>

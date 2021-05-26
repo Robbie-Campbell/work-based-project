@@ -3,6 +3,8 @@ from django import forms
 from . models import Patient, Therapy, Therapist, DirectInput, IndirectInput
 
 class PatientForm(ModelForm):
+    date_of_birth = forms.DateField(widget=forms.DateInput(format = '%d/%m/%Y'), 
+                                input_formats=('%d/%m/%Y',))
     class Meta:
         model = Patient
         fields = "__all__"

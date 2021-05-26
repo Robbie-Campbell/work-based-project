@@ -17,8 +17,8 @@
           </li>
           <li class="list-group-item pl-3"><strong>Direct Average Time: {% if direct_average is None %} No Data Collected {% else %} {{ direct_average }} mins. {% endif %}</strong></li>
           <li class="list-group-item pl-3"><strong>Indirect Average Time: {% if indirect_average is None %} No Data Collected {% else %} {{ indirect_average }} mins. {% endif %}</strong></li>
-          {% if request.user.is_staff %}
           <a class="list-group-item pl-3 btn btn-outline-primary text-left" href="{% url 'OPAL:therapy_list_therapist' id=therapist.id %}">List Therapist's Therapies</a>
+          {% if request.user.is_staff %}
             <a class="list-group-item pl-3 btn btn-outline-warning text-left" href="{% url 'OPAL:therapist_edit' id=therapist.id %}">Edit This Therapists Information</a>
             <form action= "{% url 'OPAL:therapist_delete' id=therapist.id %}" method="delete">
                 {% csrf_token %}
