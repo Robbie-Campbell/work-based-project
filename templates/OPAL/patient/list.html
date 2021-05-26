@@ -17,29 +17,29 @@
             </div>
         </div>
         {% if patients %}
-            {% for patient in patients %}
-            <div class="card font-weight-normal mt-3">
-                <div class="card-header nhs-blue-text">
-                    {{ patient }}
-                </div>
-                <ul class="list-group list-group-flush">
-                    <a class="list-group-item btn btn-outline-success text-left" href="{{ patient.get_absolute_url }}">View
-                        Patient</a>
-                    {% if request.user.is_staff %}
-                    <a class="list-group-item btn btn-outline-primary text-left"
-                        href="{% url 'OPAL:patient_edit' id=patient.id %}">Edit Patient</a>
-                    <a class="list-group-item btn btn-outline-primary text-left"
-                        href="{% url 'services:view_services' id=patient.id %}">View Services</a>
-                    <a class="list-group-item btn btn-outline-primary text-left"
-                        href="{% url 'services:add_service' id=patient.id %}">Add Service</a>
-                    <form action="{% url 'OPAL:patient_delete' id=patient.id %}" method="delete">
-                        {% csrf_token %}
-                        <button style="width:100%;" type="submit"
-                            class="list-group-item btn btn-outline-danger text-left">Delete Patient</button>
-                    </form>
-                    {% endif %}
-                </ul>
-                {% endfor %}
+        {% for patient in patients %}
+        <div class="card font-weight-normal mt-3">
+            <div class="card-header nhs-blue-text">
+                {{ patient }}
+            </div>
+            <ul class="list-group list-group-flush">
+                <a class="list-group-item btn btn-outline-success text-left" href="{{ patient.get_absolute_url }}">View
+                    Patient</a>
+                {% if request.user.is_staff %}
+                <a class="list-group-item btn btn-outline-primary text-left"
+                    href="{% url 'OPAL:patient_edit' id=patient.id %}">Edit Patient</a>
+                <a class="list-group-item btn btn-outline-primary text-left"
+                    href="{% url 'services:view_services' id=patient.id %}">View Services</a>
+                <a class="list-group-item btn btn-outline-primary text-left"
+                    href="{% url 'services:add_service' id=patient.id %}">Add Service</a>
+                <form action="{% url 'OPAL:patient_delete' id=patient.id %}" method="delete">
+                    {% csrf_token %}
+                    <button style="width:100%;" type="submit"
+                        class="list-group-item btn btn-outline-danger text-left">Delete Patient</button>
+                </form>
+                {% endif %}
+            </ul>
+            {% endfor %}
             {% endif %}
             {% if messages %}
             <div class="card font-weight-normal mt-3">
@@ -49,10 +49,11 @@
             </div>
             {% endif %}
             {% if not patients %}
-                <div style="margin-bottom:20vh;"></div>
+            <div style="margin-bottom:20vh;"></div>
             {% endif %}
         </div>
     </div>
+</div>
 </div>
 </div>
 {% endblock %}

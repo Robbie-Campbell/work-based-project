@@ -27,11 +27,12 @@
                 <li class="nav-item {% if request.path == '/options/' %}active{% endif %}">
                     <a class="nav-link" href="{% url 'navigation:options' %}">Access Database</a>
                 </li>
-                {% endif %}
-                {% if user.is_authenticated %}
+                {% elif user.is_authenticated %}
                 <li class="nav-item {% if request.path == '/view/' %}active{% endif %}">
                     <a class="nav-link" href="{% url 'navigation:options' %}">View Data</a>
                 </li>
+                {% endif %}
+                {% if user.is_authenticated %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'logout' %}">Logout</a>
                 </li>

@@ -20,6 +20,7 @@ urlpatterns = [
     path("therapist/create/", views.therapist_create, name="therapist_create"),
     path("therapist/edit/<int:id>/", views.therapist_edit, name="therapist_edit"),
     path("therapist/delete/<int:id>/", views.therapist_delete, name="therapist_delete"),
+    path("therapist/assigned_team/create/", views.assigned_team_create, name="assigned_team_create"),
     
     # Therapy URLS
     path("therapy/<int:id>/", views.therapy_single, name="therapy_single"),

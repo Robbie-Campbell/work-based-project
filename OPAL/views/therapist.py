@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from ..models import Therapy, Therapist
-from ..forms import TherapistForm
+from ..forms import TherapistForm, AssignedTeamForm
 from django.db.models import Avg, Q
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
@@ -38,6 +38,20 @@ def therapist_create(request):
     else:
         form = TherapistForm()
     return render(request, "OPAL/therapist/create.html", {"form":form})
+
+'''
+    This view creating a therapist object
+'''
+@staff_member_required(login_url="/login/")
+def assigned_team_create(request):
+    if request.method == "POST":
+        form = AssignedTeamForm(request.POST)
+        if form.is_valid():
+            task = form.save()
+            return redirect("OPAL:therapist_create")
+    else:
+        form = AssignedTeamForm()
+    return render(request, "OPAL/therapist/assigned_team/create.html", {"form":form})
 
 '''
     This view editing therapist object along their band, 

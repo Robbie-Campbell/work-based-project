@@ -1,6 +1,6 @@
 from django.forms import ModelForm
 from django import forms
-from . models import Patient, Therapy, Therapist, DirectInput, IndirectInput
+from . models import Team, Patient, IndirectInput, Therapy, Therapist, DirectInput, IndirectInput
 
 class PatientForm(ModelForm):
     date_of_birth = forms.DateField(widget=forms.DateInput(format = '%d/%m/%Y'), 
@@ -28,4 +28,9 @@ class DirectInputForm(ModelForm):
 class IndirectInputForm(ModelForm):
     class Meta:
         model = IndirectInput
+        fields = "__all__"
+
+class AssignedTeamForm(ModelForm):
+    class Meta:
+        model = Team
         fields = "__all__"

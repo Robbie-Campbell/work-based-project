@@ -8,7 +8,9 @@
     <div class="form-for-nhs">
         <div class="card-header nhs-blue-text">
             <span class="ml-4"><strong>Create a Therapist Form</strong></span>
+            <p class="ml-4">Please Create any Assigned Teams Sources Before Filling in Information for the Therapist.</p>
         </div>
+        <a style="width:100%;" class="btn btn-warning text-center p-2" href="{% url 'OPAL:assigned_team_create'%}">Create an Assigned Team</a>
         <form method="POST" class="form-group border font-weight-normal">
             {% csrf_token %}
             {{form|crispy}}
