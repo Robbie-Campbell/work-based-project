@@ -6,6 +6,10 @@ from django.contrib.auth.decorators import login_required
 from OPAL.models import Patient
 from ..models import Referral
 
+'''
+    This view creates a referral object and saves it to the
+    database.
+'''
 @staff_member_required(login_url="/login/")
 def referral_create(request, id):
     patient = Patient.objects.get(id=id)
@@ -20,6 +24,10 @@ def referral_create(request, id):
         form = ReferralForm()
     return render(request, "services/referral/create.html", {"form":form, "patient": patient})
 
+'''
+    This view edits a referral object and populates the form with
+    existing data
+'''
 @staff_member_required(login_url="/login/")
 def referral_edit(request, id):
     referral = Referral.objects.get(id=id)
@@ -34,13 +42,18 @@ def referral_edit(request, id):
                 "referral_date": referral.referral_date, "initial_contact_date": referral.initial_contact_date}
     return render(request, "services/referral/edit.html", {"form":form, "referral": referral})
 
-
+'''
+    Gets all referrals for a given patient
+'''
 @login_required
 def referral_list(request, id):
     patient = Patient.objects.get(id=id)
     referrals = Referral.objects.filter(patient=patient).order_by('-created_at')
     return render(request, "services/referral/list.html", {"referrals":referrals, "patient": patient})
 
+'''
+    Deletes a referral from a given patient
+'''
 @staff_member_required(login_url="/login/")
 def referral_delete(request, id):
     referral = Referral.objects.get(id=id)

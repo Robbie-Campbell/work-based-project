@@ -1,12 +1,25 @@
 from django.db import models
 from django.urls import reverse
 
+'''
+    Create the Assigned Team model in the database:
+    Listed fields:
+    - team_name: The name of the team
+'''
 class Team(models.Model):
     team_name = models.CharField(max_length=50)
 
     def __str__(self):
         return self.team_name
 
+'''
+    Create the therapist model in the database:
+    Listed fields:
+    - first_name, surname: The therapists name
+    - therapist_role: The role of the therapist
+    - band: The level of the therapist
+    - assigned_team: The assigned team of the therapist
+'''
 class Therapist(models.Model):
 
     # Enum for the therapist roles
@@ -36,6 +49,15 @@ class Therapist(models.Model):
     def get_absolute_url(self):
         return reverse('OPAL:therapist_single', args=[str(self.id)])
 
+'''
+    Create the patient model in the database:
+    Listed fields:
+    - hospital_number: The assigneed hospital number of a patient
+    - first_name, surname: The patients name
+    - date_of_birth: The date of birth of the patient
+    - postcode: The postcode of the patient
+    - locality: The locality (e.g. bournemouth) of the patient
+'''
 class Patient(models.Model):
     hospital_number = models.CharField(max_length=15, unique=True)
     first_name = models.CharField(max_length=50)
@@ -50,18 +72,39 @@ class Patient(models.Model):
     def get_absolute_url(self):
         return reverse('OPAL:patient_single', args=[str(self.id)])
 
+'''
+    Create the direct input model in the database:
+    Listed fields:
+    - title: The title of the direct input
+'''
 class DirectInput(models.Model):
     title = models.CharField(max_length=100)
 
     def __str__(self):
         return self.title
 
+'''
+    Create the direct input model in the database:
+    Listed fields:
+    - title: The title of the indirect input
+'''
 class IndirectInput(models.Model):
     title = models.CharField(max_length=100)
     
     def __str__(self):
         return self.title
 
+'''
+    Create the therapy model in the database:
+    Listed fields:
+    - patient: The patient recieving therapy
+    - therapist: The therapist administering the therapy
+    - rehab: Whether or not the therapy contains rehab
+    - direct_input: The type of direct input
+    - direct_time: The direct time this therapy took in minutes
+    - indirect_input: The type of indirect input
+    - indirect_time: The indirect time this therapy took in minutes
+'''
 class Therapy(models.Model):
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
     therapist = models.ForeignKey(Therapist, on_delete=models.CASCADE)

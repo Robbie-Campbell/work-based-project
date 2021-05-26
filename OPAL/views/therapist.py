@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 
 '''
-    The view returns a list of all therapists before searching
+    The view returns a list of all therapists before searching.
 '''
 @login_required
 def therapist_list(request):
@@ -15,7 +15,7 @@ def therapist_list(request):
 
 '''
     This view returns a single therapist object and the average
-    direct and indirect times for therapies
+    direct and indirect times for therapies.
 '''
 @login_required
 def therapist_single(request, id):
@@ -26,7 +26,8 @@ def therapist_single(request, id):
     return render(request, "OPAL/therapist/single.html", {"therapist": therapist, "therapies": therapies, "direct_average": direct_average["direct_time__avg"], "indirect_average": indirect_average["indirect_time__avg"]})
 
 '''
-    This view creating a therapist object
+    This view creates a therapist object and saves it to the
+    database.
 '''
 @staff_member_required(login_url="/login/")
 def therapist_create(request):
@@ -40,7 +41,8 @@ def therapist_create(request):
     return render(request, "OPAL/therapist/create.html", {"form":form})
 
 '''
-    This view creating a therapist object
+    This view creates an assigned team for a therapist as a foreign
+    key to be referenced
 '''
 @staff_member_required(login_url="/login/")
 def assigned_team_create(request):
@@ -54,8 +56,8 @@ def assigned_team_create(request):
     return render(request, "OPAL/therapist/assigned_team/create.html", {"form":form})
 
 '''
-    This view editing therapist object along their band, 
-    role and which team they assignd to 
+    This view edits a therapist object and populates the form with
+    existing data
 '''
 @staff_member_required(login_url="/login/")
 def therapist_edit(request, id):
@@ -74,7 +76,7 @@ def therapist_edit(request, id):
     return render(request, "OPAL/therapist/edit.html", {"form":form, "therapist": therapist})
 
 '''
-    This view deleting therapist object 
+    This view deletes the therapist object
 '''
 @staff_member_required(login_url="/login/")
 def therapist_delete(request, id):
@@ -83,7 +85,7 @@ def therapist_delete(request, id):
     return redirect('OPAL:therapist_list')
 
 '''
-    This view searches for the therapist object 
+    This view searches for a therapist object by the role, name, id and band
 '''
 @login_required
 def therapist_search(request):

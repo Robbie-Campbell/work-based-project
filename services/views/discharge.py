@@ -6,6 +6,10 @@ from django.contrib.auth.decorators import login_required
 from OPAL.models import Patient
 from ..models import Discharge
 
+'''
+    This view creates a discharge object and saves it to the
+    database.
+'''
 @staff_member_required(login_url="/login/")
 def discharge_create(request, id):
     patient = Patient.objects.get(id=id)
@@ -20,6 +24,10 @@ def discharge_create(request, id):
         form = DischargeForm()
     return render(request, "services/discharge/create.html", {"form":form, "patient": patient})
 
+'''
+    This view edits a discharge object and populates the form with
+    existing data
+'''
 @staff_member_required(login_url="/login/")
 def discharge_edit(request, id):
     discharge = Discharge.objects.get(id=id)
@@ -35,7 +43,10 @@ def discharge_edit(request, id):
         form = DischargeForm(initial=data)
     return render(request, "services/discharge/edit.html", {"form":form, "discharge": discharge})
 
-
+'''
+    This view creates a discharge service for a discharge as a foreign
+    key to be referenced
+'''
 @staff_member_required(login_url="/login/")
 def discharge_service_create(request, id):
     Patient.objects.get(id=id)
@@ -48,12 +59,18 @@ def discharge_service_create(request, id):
         form = DischargeServiceForm()
     return render(request, "services/discharge/discharge_service/create.html", {"form":form, "patient": patient})
 
+'''
+    This view returns all discharges for a given patient
+'''
 @login_required
 def discharge_list(request, id):
     patient = Patient.objects.get(id=id)
     discharges = Discharge.objects.filter(patient=patient).order_by('-created_at')
     return render(request, "services/discharge/list.html", {"discharges":discharges, "patient": patient})
 
+'''
+    This view deletes a discharge from the database
+'''
 @staff_member_required(login_url="/login/")
 def discharge_delete(request, id):
     discharge = Discharge.objects.get(id=id)

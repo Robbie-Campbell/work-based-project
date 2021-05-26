@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 
 '''
-    This view returns a single patinet object and the average
+    This view returns a single patient object and the average
     direct and indirect times for therapies
 '''
 @login_required
@@ -27,7 +27,7 @@ def patient_list(request):
 
 
 '''
-    This view creating a patient object
+    This view creates a patient object and stores it in the database
 '''
 @staff_member_required(login_url="/login/")
 def patient_create(request):
@@ -41,7 +41,8 @@ def patient_create(request):
     return render(request, "OPAL/patient/create.html", {"form":form})
 
 '''
-    This view editing a patient object
+    This view edits a patient object, populates the form with 
+    existing data.
 '''
 @staff_member_required(login_url="/login/")
 def patient_edit(request, id):
@@ -59,7 +60,7 @@ def patient_edit(request, id):
     return render(request, "OPAL/patient/edit.html", {"form":form, "patient": patient})
 
 '''
-    This view deleting a patient object
+    This view deletes a patient from the database
 '''
 @staff_member_required(login_url="/login/")
 def patient_delete(request, id):
@@ -68,7 +69,8 @@ def patient_delete(request, id):
     return redirect('OPAL:patient_list')
 
 '''
-    This view searches for the patient object 
+    This view searches for a patient in the database from a given
+    name or id.
 '''
 @login_required
 def patient_search(request):

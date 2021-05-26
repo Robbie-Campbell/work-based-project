@@ -6,6 +6,10 @@ from django.contrib.auth.decorators import login_required
 from OPAL.models import Patient
 from ..models import Pathway
 
+'''
+    This view creates a pathway object and saves it to the
+    database.
+'''
 @staff_member_required(login_url="/login/")
 def pathway_create(request, id):
     patient = Patient.objects.get(id=id)
@@ -20,6 +24,10 @@ def pathway_create(request, id):
         form = PathwayForm()
     return render(request, "services/pathways/create.html", {"form":form, "patient": patient})
 
+'''
+    This view edits a pathway object and populates the form with
+    existing data
+'''
 @staff_member_required(login_url="/login/")
 def pathway_edit(request, id):
     pathway = Pathway.objects.get(id=id)
@@ -36,7 +44,10 @@ def pathway_edit(request, id):
         form = PathwayForm(initial=data)
     return render(request, "services/pathways/edit.html", {"form":form, "pathway": pathway})
 
-
+'''
+    This view creates an referral source for a pathway as a foreign
+    key to be referenced
+'''
 @staff_member_required(login_url="/login/")
 def referral_source_create(request, id):
     patient = Patient.objects.get(id=id)
@@ -49,12 +60,18 @@ def referral_source_create(request, id):
         form = ReferralSourceForm()
     return render(request, "services/pathways/referral_source/create.html", {"form":form, "patient": patient})
 
+'''
+    Gets all pathways for a given patient
+'''
 @login_required
 def pathway_list(request, id):
     patient = Patient.objects.get(id=id)
     pathways = Pathway.objects.filter(patient=patient).order_by('-created_at')
     return render(request, "services/pathways/list.html", {"pathways":pathways, "patient": patient})
 
+'''
+    Deletes a pathway from a given patient
+'''
 @staff_member_required(login_url="/login/")
 def pathway_delete(request, id):
     pathway = Pathway.objects.get(id=id)

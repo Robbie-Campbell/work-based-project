@@ -35,7 +35,7 @@ def therapy_list_therapist(request, id):
     return render(request, "OPAL/therapy/list.html", {"therapist": therapist, "therapies": therapies})
 
 '''
-    The view create a therapy input 
+    This view creates a therapy object and stores it in the database
 '''
 @staff_member_required(login_url="/login/")
 def therapy_create(request, id):
@@ -52,7 +52,8 @@ def therapy_create(request, id):
     return render(request, "OPAL/therapy/create.html", {"form":form, "patient": patient})
 
 '''
-    The view editing therapy input 
+    This view edits a therapy object and populates the form with
+    existing data.
 '''
 @staff_member_required(login_url="/login/")
 def therapy_edit(request, id):
@@ -71,7 +72,7 @@ def therapy_edit(request, id):
     return render(request, "OPAL/therapy/edit.html", {"form":form, "therapy": therapy})
 
 '''
-    The view deleting therapy input 
+    This view deletes a therapy from the database
 '''
 @staff_member_required(login_url="/login/")
 def therapy_delete(request, id):
@@ -80,7 +81,7 @@ def therapy_delete(request, id):
     return redirect('OPAL:therapy_list')
 
 '''
-    The view searching for therapy input 
+    The view searches for the therapy by an id, therapist name, or patient name
 '''
 @login_required
 def therapy_search(request):
