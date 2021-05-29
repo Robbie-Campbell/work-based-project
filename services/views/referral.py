@@ -6,10 +6,9 @@ from django.contrib.auth.decorators import login_required
 from OPAL.models import Patient
 from ..models import Referral
 
-'''
-    This view creates a referral object and saves it to the
-    database.
-'''
+
+# This view creates a referral object and saves it to the
+# database.
 @staff_member_required(login_url="/login/")
 def referral_create(request, id):
     patient = Patient.objects.get(id=id)
@@ -22,12 +21,11 @@ def referral_create(request, id):
             return redirect("services:referral_list", patient.id)
     else:
         form = ReferralForm()
-    return render(request, "services/referral/create.html", {"form":form, "patient": patient})
+    return render(request, "services/referral/create.html", {"form": form, "patient": patient})
 
-'''
-    This view edits a referral object and populates the form with
-    existing data
-'''
+
+# This view edits a referral object and populates the form with
+# existing data
 @staff_member_required(login_url="/login/")
 def referral_edit(request, id):
     referral = Referral.objects.get(id=id)
@@ -37,23 +35,21 @@ def referral_edit(request, id):
             form.save()
             return redirect("services:referral_list", id=referral.patient.id)
     else:
-        form = ReferralForm(instance=referral)
         data = {"type_of_referral": referral.type_of_referral, "therapist_referring": referral.therapist_referring,
                 "referral_date": referral.referral_date, "initial_contact_date": referral.initial_contact_date}
-    return render(request, "services/referral/edit.html", {"form":form, "referral": referral})
+        form = ReferralForm(initial=data)
+    return render(request, "services/referral/edit.html", {"form": form, "referral": referral})
 
-'''
-    Gets all referrals for a given patient
-'''
+
+# Gets all referrals for a given patient
 @login_required
 def referral_list(request, id):
     patient = Patient.objects.get(id=id)
     referrals = Referral.objects.filter(patient=patient).order_by('-created_at')
-    return render(request, "services/referral/list.html", {"referrals":referrals, "patient": patient})
+    return render(request, "services/referral/list.html", {"referrals": referrals, "patient": patient})
 
-'''
-    Deletes a referral from a given patient
-'''
+
+# Deletes a referral from a given patient
 @staff_member_required(login_url="/login/")
 def referral_delete(request, id):
     referral = Referral.objects.get(id=id)

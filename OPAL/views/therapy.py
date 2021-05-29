@@ -6,37 +6,33 @@ from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 
-'''
-    The view returns a list of all therapy input before searching
-'''
+
+# The view returns a list of all therapy input before searching
 @login_required
 def therapy_single(request, id):
     therapy = Therapy.objects.get(id=id)
     return render(request, "OPAL/therapy/single.html", {"therapy": therapy})
 
-'''
-    The view returns a list of all therapy input related to a given
-    patient
-'''
+
+# The view returns a list of all therapy input related to a given
+# patient
 @login_required
 def therapy_list_patient(request, id):
     patient = Patient.objects.get(id=id)
     therapies = Therapy.objects.filter(patient=patient)
     return render(request, "OPAL/therapy/list.html", {"patient": patient, "therapies": therapies})
 
-'''
-    The view returns a list of all therapy input related to a given
-    therapist
-'''
+
+# The view returns a list of all therapy input related to a given
+# therapist
 @login_required
 def therapy_list_therapist(request, id):
     therapist = Therapist.objects.get(id=id)
     therapies = Therapy.objects.filter(therapist=therapist)
     return render(request, "OPAL/therapy/list.html", {"therapist": therapist, "therapies": therapies})
 
-'''
-    This view creates a therapy object and stores it in the database
-'''
+
+# This view creates a therapy object and stores it in the database
 @staff_member_required(login_url="/login/")
 def therapy_create(request, id):
     patient = Patient.objects.get(id=id)
@@ -49,12 +45,11 @@ def therapy_create(request, id):
             return redirect("OPAL:therapy_single", id=task.id)
     else:
         form = TherapyForm()
-    return render(request, "OPAL/therapy/create.html", {"form":form, "patient": patient})
+    return render(request, "OPAL/therapy/create.html", {"form": form, "patient": patient})
 
-'''
-    This view edits a therapy object and populates the form with
-    existing data.
-'''
+
+# This view edits a therapy object and populates the form with
+# existing data.
 @staff_member_required(login_url="/login/")
 def therapy_edit(request, id):
     therapy = Therapy.objects.get(id=id)
@@ -65,24 +60,22 @@ def therapy_edit(request, id):
             form.save()
             return redirect("OPAL:therapy_single", id=id)
     else:
-        data = {"patient": therapy.patient, "therapist": therapy.therapist, 
-                "rehab": therapy.rehab, "direct_input": therapy.direct_input, 
+        data = {"patient": therapy.patient, "therapist": therapy.therapist,
+                "rehab": therapy.rehab, "direct_input": therapy.direct_input,
                 "direct_time": therapy.direct_time, "indirect_input": therapy.indirect_input, "indirect_time": therapy.indirect_time}
         form = TherapyForm(initial=data)
-    return render(request, "OPAL/therapy/edit.html", {"form":form, "therapy": therapy})
+    return render(request, "OPAL/therapy/edit.html", {"form": form, "therapy": therapy})
 
-'''
-    This view deletes a therapy from the database
-'''
+
+# This view deletes a therapy from the database
 @staff_member_required(login_url="/login/")
 def therapy_delete(request, id):
     therapy = Therapy.objects.get(id=id)
     therapy.delete()
     return redirect('OPAL:therapy_list')
 
-'''
-    The view searches for the therapy by an id, therapist name, or patient name
-'''
+
+# The view searches for the therapy by an id, therapist name, or patient name
 @login_required
 def therapy_search(request):
     q = request.GET.get('q')

@@ -1,13 +1,14 @@
 from django.urls import path
 from . import views
 
-app_name="services"
+app_name = "services"
 
 urlpatterns = [
+
     # Options URL
     path("add_service/<int:id>/", views.add_service, name="add_service"),
     path("view_services/<int:id>/", views.view_services, name="view_services"),
-    
+
     # Pathway URLS
     path("pathways/create/<int:id>/", views.pathway_create, name="pathway_create"),
     path("pathways/list/<int:id>/", views.pathway_list, name="pathway_list"),
