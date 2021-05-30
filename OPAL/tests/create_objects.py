@@ -1,4 +1,4 @@
-from ..models import Team, Therapist, Therapy, Patient
+from ..models import Team, Therapist, Therapy, Patient, DirectInput, IndirectInput
 from django.test import Client
 from django.contrib.auth.models import User
 
@@ -28,4 +28,7 @@ def create_therapy():
     team = create_team(1)
     patient = create_patient(1)
     therapist = create_therapist(1, team)
-    return Therapy.objects.create(id=1, patient=patient, therapist=therapist)
+    indirect_input = IndirectInput.objects.create(id=1, title="test")
+    direct_input = DirectInput.objects.create(id=1, title="test")
+    return Therapy.objects.create(id=1, patient=patient, therapist=therapist, indirect_input=indirect_input, 
+                                  direct_input=direct_input, direct_time=20, indirect_time=20)

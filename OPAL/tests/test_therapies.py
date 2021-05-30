@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.urls import reverse
 
-from .create_objects import create_user, create_patient, create_team, create_therapist
+from .create_objects import create_user, create_patient, create_team, create_therapist, create_therapy
 from ..models import Therapy
 
 
@@ -9,23 +9,20 @@ class TestTherapies(TestCase):
 
     def setUp(self):
         self.client = create_user()
-        self.patient = create_patient(1)
-        team = create_team(1)
-        self.therapist = create_therapist(1, team)
-        self.therapy = self.create_therapy()
+        self.therapy = create_therapy()
 
     def test_therapy_list_patient(self):
-        self.client.post(reverse('OPAL:patient_create'), data=self.patient.__dict__)
-        response = self.client.get(reverse('OPAL:therapy_list_patient', args=[self.patient.id]))
+        self.client.get(reverse('OPAL:patient_create'), data=self.therapy.patient.__dict__)
+        response = self.client.get(reverse('OPAL:therapy_list_patient', args=[self.therapy.patient.id]))
         self.assertEqual(response.status_code, 200)
 
     def test_therapy_list_therapist(self):
-        self.client.post(reverse('OPAL:therapist_create'), data=self.therapist.__dict__)
-        response = self.client.get(reverse('OPAL:therapy_list_therapist', args=[self.therapist.id]))
+        self.client.get(reverse('OPAL:therapist_create'), data=self.therapy.therapist.__dict__)
+        response = self.client.get(reverse('OPAL:therapy_list_therapist', args=[self.therapy.therapist.id]))
         self.assertEqual(response.status_code, 200)
 
     def test_therapy_create_get(self):
-        response = self.client.get(reverse('OPAL:therapy_create', args=[self.patient.id]))
+        response = self.client.get(reverse('OPAL:therapy_create', args=[self.therapy.patient.id]))
         self.assertEqual(response.status_code, 200)
 
     def test_therapy_create_post(self):
