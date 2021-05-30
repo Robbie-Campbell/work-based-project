@@ -32,8 +32,8 @@ def therapist_create(request):
     if request.method == "POST":
         form = TherapistForm(request.POST)
         if form.is_valid():
-            task = form.save()
-            return redirect("OPAL:therapist_single", id=task.id)
+            form.save()
+            return redirect("OPAL:therapist_single", id=form.id)
     else:
         form = TherapistForm()
     return render(request, "OPAL/therapist/create.html", {"form": form})
@@ -68,7 +68,7 @@ def therapist_edit(request, id):
         data = {"first_name": therapist.first_name, "surname": therapist.surname,
                 "Therapist_role": therapist.therapist_role, "band": therapist.band,
                 "assigned_team": therapist.assigned_team}
-        form = TherapistForm(initial=data)
+        form = TherapistForm(instance=therapist, initial=data)
     return render(request, "OPAL/therapist/edit.html", {"form": form, "therapist": therapist})
 
 

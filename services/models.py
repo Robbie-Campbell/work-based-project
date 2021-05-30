@@ -34,7 +34,7 @@ class Pathway(models.Model):
     front_door = models.BooleanField(default=False)
     RAFT = models.BooleanField(default=False)
     CCMT = models.BooleanField(default=False)
-    CCMT_Date = models.DateField(blank=True, null=True)
+    CCMT_date = models.DateField(blank=True, null=True)
     admission_barthel = models.IntegerField(blank=True, null=True)
     discharge_barthel = models.IntegerField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)

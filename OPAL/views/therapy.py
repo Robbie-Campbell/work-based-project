@@ -53,7 +53,6 @@ def therapy_create(request, id):
 @staff_member_required(login_url="/login/")
 def therapy_edit(request, id):
     therapy = Therapy.objects.get(id=id)
-
     if request.method == "POST":
         form = TherapyForm(request.POST, instance=therapy)
         if form.is_valid():
@@ -63,7 +62,7 @@ def therapy_edit(request, id):
         data = {"patient": therapy.patient, "therapist": therapy.therapist,
                 "rehab": therapy.rehab, "direct_input": therapy.direct_input,
                 "direct_time": therapy.direct_time, "indirect_input": therapy.indirect_input, "indirect_time": therapy.indirect_time}
-        form = TherapyForm(initial=data)
+        form = TherapyForm(instance=therapy, initial=data)
     return render(request, "OPAL/therapy/edit.html", {"form": form, "therapy": therapy})
 
 
@@ -72,7 +71,7 @@ def therapy_edit(request, id):
 def therapy_delete(request, id):
     therapy = Therapy.objects.get(id=id)
     therapy.delete()
-    return redirect('OPAL:therapy_list')
+    return redirect('navigation:options')
 
 
 # The view searches for the therapy by an id, therapist name, or patient name

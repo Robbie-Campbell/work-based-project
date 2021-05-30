@@ -39,7 +39,8 @@
                 </form>
                 {% endif %}
             </ul>
-            {% endfor %}
+        </div>
+        {% endfor %}
             {% endif %}
             {% if messages %}
             <div class="card font-weight-normal mt-3">
@@ -49,11 +50,9 @@
             </div>
             {% endif %}
             {% if not patients %}
-            <div style="margin-bottom:20vh;"></div>
+                <div style="margin-bottom:20vh;"></div>
             {% endif %}
         </div>
     </div>
-</div>
-</div>
 </div>
 {% endblock %}

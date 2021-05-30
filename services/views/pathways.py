@@ -37,7 +37,7 @@ def pathway_edit(request, id):
     else:
         data = {"admission_date": pathway.admission_date, "meet_criteria_therapy": pathway.meet_criteria_therapy,
                 "referral_source": pathway.referral_source, "front_door": pathway.front_door,
-                "RAFT": pathway.RAFT, "CCMT": pathway.CCMT, "CCMT_Date": pathway.CCMT_Date,
+                "RAFT": pathway.RAFT, "CCMT": pathway.CCMT, "CCMT_date": pathway.CCMT_date,
                 "admission_barthel": pathway.admission_barthel, "discharge_barthel": pathway.discharge_barthel}
         form = PathwayForm(initial=data)
     return render(request, "services/pathways/edit.html", {"form": form, "pathway": pathway})

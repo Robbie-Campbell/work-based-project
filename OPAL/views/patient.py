@@ -32,7 +32,8 @@ def patient_create(request):
         form = PatientForm(request.POST)
         if form.is_valid():
             task = form.save()
-            return redirect("OPAL:patient_single", id=task.id)
+            id = task.id
+            return redirect("OPAL:patient_single", id=id)
     else:
         form = PatientForm()
     return render(request, "OPAL/patient/create.html", {"form": form})
@@ -52,7 +53,7 @@ def patient_edit(request, id):
         data = {"hospital_number": patient.hospital_number, "first_name": patient.first_name,
                 "surname": patient.surname, "date_of_birth": patient.date_of_birth,
                 "postcode": patient.postcode, "locality": patient.locality}
-        form = PatientForm(initial=data)
+        form = PatientForm(instance=patient, initial=data)
     return render(request, "OPAL/patient/edit.html", {"form": form, "patient": patient})
 
 
