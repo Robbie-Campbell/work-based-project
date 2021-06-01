@@ -3,6 +3,7 @@ from ..forms import ReferralForm
 from django.shortcuts import redirect
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from OPAL.models import Patient
 from ..models import Referral
 
@@ -18,6 +19,7 @@ def referral_create(request, id):
             task = form.save(commit=False)
             task.patient = patient
             task = form.save()
+            messages.success(request, 'Referral successfully created.')
             return redirect("services:referral_list", patient.id)
     else:
         form = ReferralForm()
@@ -33,6 +35,7 @@ def referral_edit(request, id):
         form = ReferralForm(request.POST, instance=referral)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Referral successfully updated.')
             return redirect("services:referral_list", id=referral.patient.id)
     else:
         data = {"type_of_referral": referral.type_of_referral, "therapist_referring": referral.therapist_referring,
@@ -54,4 +57,5 @@ def referral_list(request, id):
 def referral_delete(request, id):
     referral = Referral.objects.get(id=id)
     referral.delete()
+    messages.error(request, 'Referral successfully deleted.')
     return redirect("OPAL:patient_single", id=referral.patient.id)

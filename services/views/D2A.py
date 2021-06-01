@@ -3,6 +3,7 @@ from ..forms import D2AForm
 from django.shortcuts import redirect
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from OPAL.models import Patient
 from ..models import D2A
 
@@ -17,6 +18,7 @@ def D2A_create(request, id):
             task = form.save(commit=False)
             task.patient = patient
             task = form.save()
+            messages.success(request, 'D2A successfully created.')
             return redirect("services:D2A_list", patient.id)
     else:
         form = D2AForm()
@@ -32,6 +34,7 @@ def D2A_edit(request, id):
         form = D2AForm(request.POST, instance=d2a)
         if form.is_valid():
             form.save()
+            messages.success(request, 'D2A successfully updated.')
             return redirect("services:D2A_list", id=d2a.patient.id)
     else:
         data = {"therapist_completing_D2A": d2a.therapist_completing_D2A, "D2A_completion_date": d2a.D2A_completion_date}
@@ -52,4 +55,5 @@ def D2A_list(request, id):
 def D2A_delete(request, id):
     d2a = D2A.objects.get(id=id)
     d2a.delete()
+    messages.error(request, 'D2A successfully deleted.')
     return redirect("OPAL:patient_single", d2a.patient.id)

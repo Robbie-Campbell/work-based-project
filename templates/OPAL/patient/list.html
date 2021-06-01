@@ -5,7 +5,7 @@
 {% block content %}
 <div class="container d-flex justify-content-center">
     <div>
-        <div class="card-header nhs-blue-text">
+        <div class="card-header nhs-blue-text mt-2">
             <h3>Find a Patient</h3>
             <p>Search by Patient Name or Hospital Number</p>
             <div class="input-group mb-3">
@@ -41,18 +41,14 @@
             </ul>
         </div>
         {% endfor %}
-            {% endif %}
-            {% if messages %}
-            <div class="card font-weight-normal mt-3">
-                <div class="card-header nhs-blue-text">
-                    <h1>No Results Found</h1>
-                </div>
+        {% endif %}
+        {% if messages %}
+        <div class="card font-weight-normal mt-3">
+            <div class="card-header nhs-blue-text">
+                <h1>No Results Found</h1>
             </div>
-            {% endif %}
-            {% if not patients %}
-                <div style="margin-bottom:20vh;"></div>
-            {% endif %}
         </div>
+        {% endif %}
     </div>
 </div>
 {% endblock %}

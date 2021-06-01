@@ -1,4 +1,5 @@
 from pathlib import Path
+from django.contrib.messages import constants as messages
 import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -83,6 +84,10 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+MESSAGE_TAGS = {
+    messages.ERROR: 'danger',
+}
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (

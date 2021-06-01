@@ -4,6 +4,7 @@ from ..forms import TherapistForm, AssignedTeamForm
 from django.db.models import Avg, Q
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 
 
@@ -33,6 +34,7 @@ def therapist_create(request):
         form = TherapistForm(request.POST)
         if form.is_valid():
             task = form.save()
+            messages.success(request, 'Therapist successfully created.')
             return redirect("OPAL:therapist_single", id=task.id)
     else:
         form = TherapistForm()
@@ -47,6 +49,7 @@ def assigned_team_create(request):
         form = AssignedTeamForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Assigned Team successfully created.')
             return redirect("OPAL:therapist_create")
     else:
         form = AssignedTeamForm()
@@ -62,6 +65,7 @@ def therapist_edit(request, id):
         form = TherapistForm(request.POST, instance=therapist)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Therapist successfully updated.')
             return redirect("OPAL:therapist_single", id=id)
     else:
         data = {"first_name": therapist.first_name, "surname": therapist.surname,
@@ -76,6 +80,7 @@ def therapist_edit(request, id):
 def therapist_delete(request, id):
     therapist = Therapist.objects.get(id=id)
     therapist.delete()
+    messages.error(request, 'Therapist successfully deleted.')
     return redirect('OPAL:therapist_list')
 
 

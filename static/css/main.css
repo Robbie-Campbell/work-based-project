@@ -21,6 +21,18 @@ body {
     position: relative;
 }
 
+#covid-warning{
+    margin: 0;
+}
+
+.alert-warning{
+    background: #ffeb3b;
+}
+
+.alert{
+    margin: 0;
+}
+
 .jumbotron {
     background-image: url("../images/jumbo.jpg");
     background-size: cover;
@@ -91,12 +103,12 @@ body {
 
 .nav-link:hover,
 .active {
-    color: #FFB81C;
+    color: #ffeb3b;
     font-weight: 400;
 }
 
 .alert-warning {
-    background: #FFB81C;
+    background: #ffeb3b;
     color: black;
     display: flex;
 }

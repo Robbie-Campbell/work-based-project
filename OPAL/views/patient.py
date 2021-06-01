@@ -4,6 +4,7 @@ from .. forms import PatientForm
 from django.db.models import Avg, Q
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 
 
@@ -33,6 +34,7 @@ def patient_create(request):
         if form.is_valid():
             task = form.save()
             id = task.id
+            messages.success(request, 'Patient successfully created.')
             return redirect("OPAL:patient_single", id=id)
     else:
         form = PatientForm()
@@ -48,6 +50,7 @@ def patient_edit(request, id):
         form = PatientForm(request.POST, instance=patient)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Patient successfully updated.')
             return redirect("OPAL:patient_single", id=id)
     else:
         data = {"hospital_number": patient.hospital_number, "first_name": patient.first_name,
@@ -62,6 +65,7 @@ def patient_edit(request, id):
 def patient_delete(request, id):
     patient = Patient.objects.get(id=id)
     patient.delete()
+    messages.error(request, 'Patient successfully deleted.')
     return redirect('OPAL:patient_list')
 
 

@@ -45,7 +45,7 @@
                     </ul>
                 </div>
             </nav>
-            <div class="alert alert-warning p-3" role="alert">
+            <div id="covid-warning" class="alert alert-warning p-3" role="alert">
                 <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-flag-fill"
                     viewBox="0 0 16 16">
                     <path
@@ -53,9 +53,18 @@
                 </svg>
                 <div class="alert-information pl-3">
                     <h5>COVID-19 UPDATE</h5>
-                    <a href="#">Get the latest information about this.</a>
+                    <a href="https://www.nhs.uk/conditions/coronavirus-covid-19/">Get the latest information about this.</a>
                 </div>
             </div>
+            {% if messages %}
+                <ul class="messages" style="list-style-type: none; padding: 0;">
+                    {% for message in messages %}
+                    <li {% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}>
+                        {{ message }}
+                    </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
             {% block content %}
             {% endblock %}
         </body>

@@ -3,6 +3,7 @@ from ..forms import PathwayForm, ReferralSourceForm
 from django.shortcuts import redirect
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from OPAL.models import Patient
 from ..models import Pathway
 
@@ -18,6 +19,7 @@ def pathway_create(request, id):
             task = form.save(commit=False)
             task.patient = patient
             task = form.save()
+            messages.success(request, 'Pathway successfully created.')
             return redirect("services:pathway_list", patient.id)
     else:
         form = PathwayForm()
@@ -33,6 +35,7 @@ def pathway_edit(request, id):
         form = PathwayForm(request.POST, instance=pathway)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Pathway successfully updated.')
             return redirect("services:pathway_list", id=pathway.patient.id)
     else:
         data = {"admission_date": pathway.admission_date, "meet_criteria_therapy": pathway.meet_criteria_therapy,
@@ -52,6 +55,7 @@ def referral_source_create(request, id):
         form = ReferralSourceForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Referral Source successfully created.')
             return redirect("services:pathway_create", id=patient.id)
     else:
         form = ReferralSourceForm()
@@ -71,4 +75,5 @@ def pathway_list(request, id):
 def pathway_delete(request, id):
     pathway = Pathway.objects.get(id=id)
     pathway.delete()
+    messages.error(request, 'Pathway successfully deleted.')
     return redirect("OPAL:patient_single", id=pathway.patient.id)

@@ -3,6 +3,7 @@ from ..forms import DischargeForm, DischargeServiceForm
 from django.shortcuts import redirect
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from OPAL.models import Patient
 from ..models import Discharge
 
@@ -18,6 +19,7 @@ def discharge_create(request, id):
             task = form.save(commit=False)
             task.patient = patient
             task = form.save()
+            messages.success(request, 'Discharge successfully created.')
             return redirect("services:discharge_list", patient.id)
     else:
         form = DischargeForm()
@@ -33,6 +35,7 @@ def discharge_edit(request, id):
         form = DischargeForm(request.POST, instance=discharge)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Discharge successfully updated.')
             return redirect("services:discharge_list", id=discharge.patient.id)
     else:
         data = {"date_no_reside": discharge.date_no_reside, "discharge_date": discharge.discharge_date,
@@ -51,6 +54,7 @@ def discharge_service_create(request, id):
         form = DischargeServiceForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Discharge Service successfully created.')
             return redirect("services:discharge_create", id=id)
     else:
         form = DischargeServiceForm()
@@ -70,4 +74,5 @@ def discharge_list(request, id):
 def discharge_delete(request, id):
     discharge = Discharge.objects.get(id=id)
     discharge.delete()
+    messages.error(request, 'Discharge successfully deleted.')
     return redirect("OPAL:patient_single", id=discharge.patient.id)

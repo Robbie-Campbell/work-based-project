@@ -4,6 +4,7 @@ from ..forms import TherapyForm
 from django.shortcuts import redirect
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 
 
@@ -42,6 +43,7 @@ def therapy_create(request, id):
             task = form.save(commit=False)
             task.patient = patient
             task = form.save()
+            messages.success(request, 'Therapy successfully created.')
             return redirect("OPAL:therapy_single", id=task.id)
     else:
         form = TherapyForm()
@@ -57,6 +59,7 @@ def therapy_edit(request, id):
         form = TherapyForm(request.POST, instance=therapy)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Therapy successfully updated.')
             return redirect("OPAL:therapy_single", id=id)
     else:
         data = {"patient": therapy.patient, "therapist": therapy.therapist,
@@ -71,6 +74,7 @@ def therapy_edit(request, id):
 def therapy_delete(request, id):
     therapy = Therapy.objects.get(id=id)
     therapy.delete()
+    messages.error(request, 'Therapy successfully deleted.')
     return redirect('navigation:options')
 
 

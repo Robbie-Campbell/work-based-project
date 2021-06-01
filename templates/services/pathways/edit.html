@@ -6,7 +6,7 @@
 {% load crispy_forms_tags %}
 <div class="container d-flex justify-content-center">
     <div class="form-for-nhs">
-        <div class="card-header nhs-blue-text">
+        <div class="card-header nhs-blue-text mt-2">
             <span class="ml-4"><strong>Update Pathway with ID: {{ pathway.id }}</strong></span><br>
         </div>
         <a style="width:100%;" class="btn btn-warning text-center p-2" href="{% url 'services:referral_source_create' id=pathway.patient.id %}">Create New Referral Source</a>

@@ -2,6 +2,7 @@ from django.shortcuts import render
 from ..forms import DirectInputForm, IndirectInputForm
 from django.shortcuts import redirect
 from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib import messages
 from ..models import Patient
 
 
@@ -12,6 +13,7 @@ def direct_input_create(request, id):
         form = DirectInputForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Direct Input successfully created.')
             return redirect("OPAL:therapy_create", id=id)
     else:
         form = DirectInputForm()
@@ -25,6 +27,7 @@ def indirect_input_create(request, id):
         form = IndirectInputForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Indirect Input successfully created.')
             return redirect("OPAL:therapy_create", id=id)
     else:
         form = IndirectInputForm()
