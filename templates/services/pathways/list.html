@@ -23,7 +23,7 @@
                 Front Door: {{ pathway.front_door }}<br>
                 RAFT: {{ pathway.RAFT }}<br>
                 CCMT: {{ pathway.CCMT }}<br>
-                CCMT Date: {{ pathway.CCMT_Date }}<br>
+                CCMT Date: {{ pathway.CCMT_date }}<br>
                 Admission Barthel: {{ pathway.admission_barthel }}<br>
                 Discharge Barthel: {{ pathway.discharge_barthel }}<br>
             </li>
@@ -32,7 +32,7 @@
             <a class="list-group-item pl-3 btn btn-outline-warning text-left" href="{% url 'services:pathway_edit' id=pathway.id %}">Edit Pathway</a>
             <form action= "{% url 'services:pathway_delete' id=pathway.id %}" method="DELETE">
                 {% csrf_token %}
-                <button style="width:100%;" type="submit" class="list-group-item pl-3 btn btn-outline-danger text-left">Delete Pathway</button>
+                <button style="width:100%;" type="submit" class="list-group-item pl-3 btn btn-outline-danger text-left" onclick="return confirm('Are you sure you want to delete this?')">Delete Pathway</button>
             </form>
             {% endif %}
             </ul>

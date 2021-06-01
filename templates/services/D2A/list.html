@@ -27,7 +27,7 @@
             <a class="list-group-item pl-3 btn btn-outline-warning text-left" href="{% url 'services:D2A_edit' id=D2A.id %}">Edit this D2A</a>
             <form action= "{% url 'services:D2A_delete' id=D2A.id %}" method="DELETE">
                 {% csrf_token %}
-                <button style="width:100%;" type="submit" class="list-group-item pl-3 btn btn-outline-danger text-left">Delete D2A</button>
+                <button style="width:100%;" type="submit" class="list-group-item pl-3 btn btn-outline-danger text-left" onclick="return confirm('Are you sure you want to delete this?')">Delete D2A</button>
             </form>
             {% endif %}
             </ul>

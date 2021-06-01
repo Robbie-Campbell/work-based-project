@@ -24,7 +24,7 @@
           <a class="list-group-item pl-3 btn btn-outline-warning text-left" href="{% url 'OPAL:patient_edit' id=patient.id %}">Edit Patient</a>
           <form action= "{% url 'OPAL:patient_delete' id=patient.id %}" method="delete">
             {% csrf_token %}
-            <button style="width:100%;" type="submit" class="list-group-item pl-3 btn btn-outline-danger text-left">Delete Patient</button>
+            <button style="width:100%;" type="submit" class="list-group-item pl-3 btn btn-outline-danger text-left" onclick="return confirm('Are you sure you want to delete this?')">Delete Patient</button>
           </form>
           {% endif %}
         </ul>

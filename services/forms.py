@@ -8,7 +8,7 @@ class PathwayForm(ModelForm):
                                      input_formats=('%d/%m/%Y',))
 
     CCMT_date = forms.DateField(widget=forms.DateInput(format='%d/%m/%Y'),
-                                     input_formats=('%d/%m/%Y',))
+                                     input_formats=('%d/%m/%Y',), required=False)
 
     class Meta:
         model = Pathway

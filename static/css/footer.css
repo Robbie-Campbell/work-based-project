@@ -14,6 +14,21 @@
     color: #005EB8;
 }
 
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    max-height:300px;
+}
+
+.main-container {
+    min-height: 100vh; /* will cover the 100% of viewport */
+    overflow: hidden;
+    display: block;
+    position: relative;
+    padding-bottom:300px;
+}
+
 #CQCroundup {
     display: flex;
     flex-direction: row;
@@ -30,10 +45,8 @@
 #footer-addr {
     background-color:
         #00A9CE;
-    padding-top: 30px;
     /* padding-bottom: 20px; */
     color: #FFF;
-    margin-top: 20px;
     scroll-padding-bottom: auto;
 }
 
@@ -50,8 +63,6 @@ ul.footer-addr {
     margin: 0;
     padding: 0;
 }
-
-ul.footer-addr>li {}
 
 .footericons {
     width: 50px;
@@ -99,51 +110,7 @@ ul.footer>li {
     margin-left: 10px
 }
 
-
-/* @media / screen size changes here  */
-/* landscape for ipads  */
-
-@media only screen and (max-width: 1200px) {
-    form.SearchNavBar input[type=text] {
-        padding: 5px;
-        font-size: 15px;
-        width: 84%;
-        height: 38px;
-        margin-bottom: 2px;
-    }
-
-    form.SearchNavBar button {
-        width: 15%;
-        padding: 8px;
-        font-size: 15px;
-        margin-left: 2px;
-    }
-}
-
 @media only screen and (min-width: 980px) and (max-width: 1200px) {
-
-    form.SearchNavBar input[type=text] {
-        padding: 5px;
-        font-size: 16px;
-        width: 40%;
-        height: 30px;
-        margin-top: 6px;
-    }
-
-    form.SearchNavBar button {
-        width: 4%;
-        padding: 4px;
-        font-size: 18px;
-        margin-left: 0px;
-        margin-top: 6px;
-    }
-
-    .InfoBoxHome,
-    .InfoBoxHome-Red,
-    .InfoBoxHome-other {
-        margin-bottom: 5px;
-    }
-
     .InfoBoxHome-content ul li p {
         padding: 6px 6px 6px 12px;
         font-size: 16px;
@@ -263,22 +230,6 @@ ul.footer>li {
         margin-left: -25px;
     }
 
-    form.SearchNavBar input[type=text] {
-        padding: 6px;
-        width: 91%;
-        height: 40px;
-        margin-top: 9px;
-        margin-bottom: 7px;
-    }
-
-    form.SearchNavBar button {
-        width: 7%;
-        padding: 9px;
-        margin-left: 0px;
-        margin-right: 8px;
-        margin-top: 9px;
-        margin-bottom: 9px;
-    }
 
 
     #footer-addr,

@@ -29,7 +29,7 @@
             <a class="list-group-item pl-3 btn btn-outline-warning text-left" href="{% url 'services:discharge_edit' id=discharge.id %}">Edit Discharge</a>
             <form action= "{% url 'services:discharge_delete' id=discharge.id %}" method="DELETE">
                 {% csrf_token %}
-                <button style="width:100%;" type="submit" class="list-group-item pl-3 btn btn-outline-danger text-left">Delete discharge</button>
+                <button style="width:100%;" type="submit" class="list-group-item pl-3 btn btn-outline-danger text-left" onclick="return confirm('Are you sure you want to delete this?')">Delete discharge</button>
             </form>
             {% endif %}
             </ul>

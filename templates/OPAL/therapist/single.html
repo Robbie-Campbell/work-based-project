@@ -22,7 +22,7 @@
             <a class="list-group-item pl-3 btn btn-outline-warning text-left" href="{% url 'OPAL:therapist_edit' id=therapist.id %}">Edit This Therapists Information</a>
             <form action= "{% url 'OPAL:therapist_delete' id=therapist.id %}" method="delete">
                 {% csrf_token %}
-                <button style="width:100%;" type="submit" class="list-group-item pl-3 btn btn-outline-danger text-left">Delete Therapist</button>
+                <button style="width:100%;" type="submit" class="list-group-item pl-3 btn btn-outline-danger text-left" onclick="return confirm('Are you sure you want to delete this?')">Delete Therapist</button>
             </form>
           {% endif %}
         </ul>

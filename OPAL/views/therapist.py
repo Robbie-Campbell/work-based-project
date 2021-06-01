@@ -32,8 +32,8 @@ def therapist_create(request):
     if request.method == "POST":
         form = TherapistForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect("OPAL:therapist_single", id=form.id)
+            task = form.save()
+            return redirect("OPAL:therapist_single", id=task.id)
     else:
         form = TherapistForm()
     return render(request, "OPAL/therapist/create.html", {"form": form})
@@ -58,7 +58,6 @@ def assigned_team_create(request):
 @staff_member_required(login_url="/login/")
 def therapist_edit(request, id):
     therapist = Therapist.objects.get(id=id)
-
     if request.method == "POST":
         form = TherapistForm(request.POST, instance=therapist)
         if form.is_valid():
